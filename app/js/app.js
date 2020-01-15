@@ -3,7 +3,7 @@ var b64 = b64 || {};
 b64.errorStrings = {
   'empty': "Please provide either file or text.",
   'filesize': "The file provided is too large.",
-  'outputTrimmed': "The output is trimmed. Please use \"Save file...\" or \"Copy to clipboard\" feature."
+  'outputTrimmed': "The output has been truncated. Please use \"Save file...\" or \"Copy to clipboard\" feature."
 };
 
 b64.$ = (el) => { return el.querySelector.bind(el); };
@@ -29,10 +29,10 @@ b64.AsciiViewer = function (blob, config) {
       var fr = new FileReader();
       fr.addEventListener("loadend", () => {
         var trimmed = fr.result.length > viewer.trimFirst;
-        var out = `<span class="trimFirst">${fr.result.slice(0, viewer.trimFirst)}</span>`;
+        var out = `<pre class="trimFirst">${fr.result.slice(0, viewer.trimFirst)}</pre>`;
         if (trimmed) {
-          out = out + '<span class="delimiter">...</span>';
-          out = out + `<span class="trimLast">${fr.result.slice(-viewer.trimLast)}</span>`;
+          out = out + '<pre class="delimiter">...</pre>';
+          out = out + `<pre class="trimLast">${fr.result.slice(-viewer.trimLast)}</pre>`;
         }
 
         el.innerHTML =  out;
@@ -130,6 +130,10 @@ b64.InputViewController = function (bus, el) {
   this.fileInput = b64.$(this.el)("[role=file-drop]");
   this.errorsView = b64.$(this.el)("[role=errors]");
 
+  this.encodeBtn = b64.$(this.el)('[role=encode-btn]');
+  this.decodeBtn = b64.$(this.el)('[role=decode-btn]');
+  this.restartBtn = b64.$(el)('[role=restart-btn]');
+
   var bus = bus;
   var controller = this;
 
@@ -144,10 +148,6 @@ b64.InputViewController = function (bus, el) {
       return ['empty'];
     }
 
-    // if (!fileInputEmpty && this.fileInput.files[0].size > this.FILESIZE_LIMIT) {
-    //   return ['filesize'];
-    // }
-
     return true;
   }
   this.validateEncode.bind(this);
@@ -156,7 +156,8 @@ b64.InputViewController = function (bus, el) {
 
   this.clear = () => {
     this.textInput.value = '';
-    this.fileInput.value = '';
+    this.fileInput.value = null;
+    this.decodeBtn.disabled = false;
   }
   this.clear.bind(this);
 
@@ -202,7 +203,12 @@ b64.InputViewController = function (bus, el) {
   this.readInputForDecode.bind(this);
 
   this.init = () => {
-    b64.$(el)('[role=encode-btn]').addEventListener('click', () => {
+    this.restartBtn.addEventListener('click', () => {
+      var e = new Event("restart");
+      bus.dispatchEvent(e);
+    });
+    this.fileInput.addEventListener('change', () => this.decodeBtn.disabled = true);
+    this.encodeBtn.addEventListener('click', () => {
       var validation = controller.validateEncode();
       if (validation !== true) {
         controller.renderErrors(validation);
@@ -213,7 +219,7 @@ b64.InputViewController = function (bus, el) {
       controller.readInputForEncode();
     });
 
-    b64.$(el)('[role=decode-btn]').addEventListener('click', () => {
+    this.decodeBtn.addEventListener('click', () => {
       var validation = controller.validateDecode();
       if (validation !== true) {
         controller.renderErrors(validation);
@@ -239,6 +245,7 @@ b64.ResultViewController = function (bus, el) {
   this.notificationView = b64.$(el)('[role=notification]');
 
   this.encodingResult = undefined;
+  this.decodingResult = undefined;
 
   this.restartBtn = b64.$(el)('[role=restart-btn]');
 
@@ -273,6 +280,18 @@ b64.ResultViewController = function (bus, el) {
 
   }
   this.renderEncodingResult.bind(this);
+
+  this.renderDecodingResult = (sourceBlob, textResult) => {
+    var binaryViewer = new b64.HexViewer(textResult, {trimFirst: 128, trimLast: 128});
+    var asciiViewer = new b64.AsciiViewer(textResult);
+
+    binaryViewer.present(this.binaryPreview);
+    asciiViewer.present(this.textPreview);
+
+    this.decodingResult = textResult;
+    this.outputView.innerText = '';
+  }
+  this.renderDecodingResult.bind(this);
 
   this.init = () => {
     this.restartBtn.addEventListener('click', () => {
@@ -321,9 +340,9 @@ b64.ProgressViewController = function(bus, el){
   this.init.bind(this);
 }
 
-b64.blobToBase64 = (blob, bus) => {
+b64.runWorkerBridge = (worker, blob, bus) => {
   return new Promise((resolve, reject) => {
-    var w = new Worker('js/encode-worker.js');
+    var w = new Worker(worker);
     var terminate;
     terminate = () => {
       w.terminate();
@@ -339,11 +358,17 @@ b64.blobToBase64 = (blob, bus) => {
         case 'start':
           bus.dispatchEvent(new CustomEvent("progressStart", {detail: e.data[1]}));
         break;
+        case 'error':
+          reject(e.data[1]);
+        break;
         case 'end':
           bus.dispatchEvent(new CustomEvent("progressEnd"));
           bus.removeEventListener('progressCancel', terminate); // todo
           w.terminate();
           resolve(e.data[1]);
+        break;
+        case 'beforestart':
+          bus.dispatchEvent(new CustomEvent("progressStarted"));
         break;
         default:
           reject(new Error('Unknown message from worker.'));
@@ -382,7 +407,7 @@ b64.AppController = function (el){
     bus.addEventListener("encode", (event) => {
       var blob = event.detail;
       var job = this.presentView(controller.progressViewCtl)
-        .then(() => b64.blobToBase64(blob, bus))
+        .then(() => b64.runWorkerBridge('js/encode-worker.js', blob, bus))
         .then((textResult) => {
           if (job.rejected) {
             throw new Error('Rejected.');
@@ -414,18 +439,40 @@ b64.AppController = function (el){
 
     });
 
-    bus.addEventListener("encodingError", (event) => {
-      // b64.errorStrings[event.detail]
-    });
-
     bus.addEventListener("decode", (event) => {
       var blob = event.detail;
-      b64.blobBase64ToBlob(blob, bus).then((blobResult) => {
-        controller.hideView(controller.inputViewCtl).then(() => {
-          controller.resultViewCtl.renderDecodingResult();
-          controller.presentView(controller.resultViewCtl);
+
+      var job = this.presentView(controller.progressViewCtl)
+        .then(() => b64.runWorkerBridge('js/decode-worker.js', blob, bus))
+        .then((textResult) => {
+          if (job.rejected) {
+            throw new Error('Rejected.');
+          }
+          controller.resultViewCtl.renderDecodingResult(blob, textResult);
+          return controller.presentView(controller.resultViewCtl);
+        })
+        .then(() => {
+          if (job.rejected) {
+            throw new Error('Rejected.');
+          }
+          controller.hideView(controller.inputViewCtl)
+        })
+        .then(() => {
+          if (job.rejected) {
+            throw new Error('Rejected.');
+          }
+          controller.hideView(controller.progressViewCtl)
         });
-      });
+      job.rejected = false;
+      var cancelJob = () => {
+        job.rejected = true;
+        controller.hideView(controller.progressViewCtl);
+        controller.hideView(controller.resultViewCtl);
+        controller.presentView(controller.inputViewCtl); //todo: sequence
+        bus.removeEventListener('progressCancel', cancelJob);
+      };
+      bus.addEventListener('progressCancel', cancelJob);
+
     });
 
     bus.addEventListener("restart", () => {
@@ -437,7 +484,7 @@ b64.AppController = function (el){
   this.init.bind(this);
 };
 
-
+// TODO: extract
 window.addEventListener('DOMContentLoaded', () => {
   var view = document.querySelector('[role=b64-app]');
   var vc = new b64.AppController(view);

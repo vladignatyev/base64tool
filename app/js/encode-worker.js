@@ -17,21 +17,15 @@ onmessage = function(e) {
         j = 0,
         rest = s.length % 3; // To determine the final padding
 
-    var ol = (s.length / 3) << 2 + rest;
-    console.log(ol);
-    result = new Array(ol);
+    result = "";
 
     for (; i < s.length;) {
         a = s[i++];
         b = s[i++];
         c = s[i++];
         bitmap = (a << 16) | (b << 8) | c;
-        // result += alphabetBase64.charAt(bitmap >> 18 & 63) + alphabetBase64.charAt(bitmap >> 12 & 63) +
-        //     alphabetBase64.charAt(bitmap >> 6 & 63) + alphabetBase64.charAt(bitmap & 63);
-        result[j] = alphabetBase64.charAt(bitmap >> 18 & 63); j++;
-        result[j] = alphabetBase64.charAt(bitmap >> 12 & 63); j++;
-        result[j] = alphabetBase64.charAt(bitmap >> 6 & 63); j++;
-        result[j] = alphabetBase64.charAt(bitmap & 63); j++;
+        result += alphabetBase64.charAt(bitmap >> 18 & 63) + alphabetBase64.charAt(bitmap >> 12 & 63) +
+            alphabetBase64.charAt(bitmap >> 6 & 63) + alphabetBase64.charAt(bitmap & 63);
 
         if ((i % (256 * 1024)) == 0) {
           postMessage(['progress', i]);
@@ -39,9 +33,6 @@ onmessage = function(e) {
 
     }
 
-    result = result.join('');
-
-    // If there's need of padding, replace the last 'A's with equal signs
     var out = rest ? result.slice(0, rest - 3) + "===".substring(rest) : result;
 
     postMessage(['end', out]);
@@ -50,4 +41,6 @@ onmessage = function(e) {
   var fr = new FileReader(blob);
   fr.addEventListener("loadend", handleDataConsumed);
   fr.readAsArrayBuffer(blob);
+
+  postMessage(['beforestart', undefined]);
 }

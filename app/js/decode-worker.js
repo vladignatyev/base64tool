@@ -4,15 +4,20 @@ onmessage = function(e) {
 
   var blob = e.data[0];
 
-  handleDataConsumed = () => {
+  handleDataConsumed = (event) => {
+    var s = new Uint8Array(event.target.result);
+
+
     // atob can work with strings with whitespaces, even inside the encoded part,
     // but only \t, \n, \f, \r and ' ', which can be stripped.
     var string = String(fr.result).replace(/[\t\n\f\r ]+/g, "");
     if (!reBase64.test(string))
-        reject(new TypeError("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded."));
+      postMessage(['error', new TypeError("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.")]);
 
-    // Adding the padding if missing, for semplicity
+    // Adding the padding if missing, for simplicity
     string += "==".slice(2 - (string.length & 3));
+    postMessage(['start', string.length]);
+
     var bitmap, result = [],
         r1, r2, i = 0;
     for (; i < string.length;) {
@@ -22,12 +27,17 @@ onmessage = function(e) {
             if (r1 === 64) result.push(bitmap >> 16 & 255);
             else if (r2 === 64){ result.push(bitmap >> 16 & 255); result.push(bitmap >> 8 & 255); }
             else { result.push(bitmap >> 16 & 255); result.push(bitmap >> 8 & 255); result.push(bitmap & 255); }
+        if ((i % (256 * 1024)) == 0) {
+          postMessage(['progress', i]);
+        }
     }
-    resolve(new Blob([new Uint8Array(result)]));
+    let out = new Blob([new Uint8Array(result)]);
+    postMessage(['end', out]);
   }
 
   var fr = new FileReader(blob);
   fr.addEventListener("loadend", handleDataConsumed);
   fr.readAsBinaryString(blob);
 
+  postMessage(['beforestart', undefined]);
 }
