@@ -1,10 +1,8 @@
+import {errorStrings} from "./lib/errors.js"
+
 var b64 = b64 || {};
 
-b64.errorStrings = {
-  'empty': "Please provide either file or text.",
-  'filesize': "The file provided is too large.",
-  'outputTrimmed': "The output has been truncated. Please use \"Save file...\" or \"Copy to clipboard\" feature."
-};
+b64.errorStrings = errorStrings;
 
 b64.$ = (el) => { return el.querySelector.bind(el); };
 
@@ -123,7 +121,7 @@ b64.HexViewer = function (blob, config) {
 };
 
 b64.InputViewController = function (bus, el) {
-  this.FILESIZE_LIMIT = 1024 * 1024 * 8;
+  this.FILESIZE_LIMIT = 1024 * 1024 * 128;
   this.el = el;
 
   this.textInput = b64.$(this.el)("[role=textinput]");
@@ -182,7 +180,11 @@ b64.InputViewController = function (bus, el) {
       blob = new Blob([this.fileInput.files[0]]);
     }
 
-    bus.dispatchEvent(new CustomEvent("encode", {'detail': blob}));
+    if (blob.size > this.FILESIZE_LIMIT) {
+      this.renderErrors(['filesize']);
+    } else {
+      bus.dispatchEvent(new CustomEvent("encode", {'detail': blob}));
+    }
   }
   this.readInputForEncode.bind(this);
 
@@ -205,6 +207,7 @@ b64.InputViewController = function (bus, el) {
   this.init = () => {
     this.restartBtn.addEventListener('click', () => {
       var e = new Event("restart");
+      controller.cleanErrors();
       bus.dispatchEvent(e);
     });
     this.fileInput.addEventListener('change', () => this.decodeBtn.disabled = true);
@@ -237,7 +240,7 @@ b64.ResultViewController = function (bus, el) {
   var bus = bus;
   this.el = el;
 
-  this.OUTPUT_MAX_SIZE = 8 * 1024;
+  this.OUTPUT_MAX_SIZE = 64;
 
   this.binaryPreview = b64.$(el)('[role=binary-preview]');
   this.textPreview = b64.$(el)('[role=text-preview]');
@@ -266,9 +269,10 @@ b64.ResultViewController = function (bus, el) {
     binaryViewer.present(this.binaryPreview);
     asciiViewer.present(this.textPreview);
 
-    this.encodingResult = textResult;
 
     var outputMaxLength = this.OUTPUT_MAX_SIZE;
+
+    this.encodingResult = textResult.slice(0, outputMaxLength);
 
     if (textResult.length > outputMaxLength) {
       this.outputView.innerText = textResult.slice(0, outputMaxLength) + '...';
@@ -320,11 +324,13 @@ b64.ProgressViewController = function(bus, el){
   this.start = (event) => {
     this.volume = event.detail;
     this.outputView.innerHTML = `<p></p>`;
+    this.cancelBtn.style.opacity = '1.0';
     bus.addEventListener('progress', this.updateView);
     bus.addEventListener('progressEnd', this.end);
   }
   this.start.bind(this);
   this.end = () => {
+    this.cancelBtn.style.opacity = '0.0';
     bus.removeEventListener('progress', this.updateView);
     bus.removeEventListener('progressEnd', this.end);
     this.volume = undefined;
@@ -333,6 +339,7 @@ b64.ProgressViewController = function(bus, el){
 
   this.init = () => {
     bus.addEventListener('progressStart', this.start);
+
     this.cancelBtn.addEventListener('click', () => {
       bus.dispatchEvent(new Event('progressCancel'))
     });
@@ -379,6 +386,13 @@ b64.runWorkerBridge = (worker, blob, bus) => {
   });
 }
 
+b64.SaveManager = function (el) {
+  this.saveFileBtn = b64.$(el)('[role=save-file-btn]');
+  this.saveClipboardBtn = b64.$(el)('[role=save-clipboard-btn]');
+
+  this.enable
+};
+
 b64.AppController = function (el){
   var bus = el;
 
@@ -403,7 +417,9 @@ b64.AppController = function (el){
   this.init = () => {
     this.inputViewCtl.init();
     this.resultViewCtl.init();
-
+    bus.addEventListener("error", (event) => {
+      alert(1);
+    });
     bus.addEventListener("encode", (event) => {
       var blob = event.detail;
       var job = this.presentView(controller.progressViewCtl)
@@ -419,20 +435,17 @@ b64.AppController = function (el){
           if (job.rejected) {
             throw new Error('Rejected.');
           }
-          controller.hideView(controller.inputViewCtl)
-        })
-        .then(() => {
-          if (job.rejected) {
-            throw new Error('Rejected.');
-          }
-          controller.hideView(controller.progressViewCtl)
+          controller.hideView(controller.progressViewCtl);
+          controller.hideView(controller.inputViewCtl);
         });
+
       job.rejected = false;
+
       var cancelJob = () => {
         job.rejected = true;
         controller.hideView(controller.progressViewCtl);
         controller.hideView(controller.resultViewCtl);
-        controller.presentView(controller.inputViewCtl); //todo: sequence
+        controller.presentView(controller.inputViewCtl);
         bus.removeEventListener('progressCancel', cancelJob);
       };
       bus.addEventListener('progressCancel', cancelJob);

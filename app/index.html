@@ -59,12 +59,8 @@
       <div class="b64-view" role="input-view">
         <div role="progress-view">
           <div role="output-holder">
-
           </div>
-          <button role="cancel-btn">
-            [ X ]
-          </button>
-
+          <button role="cancel-btn" style="opacity:0;">Cancel</button>
         </div>
         <div role="textinput-error-box"></div>
         <textarea role="textinput" name="name" rows="8" cols="80"></textarea>
@@ -80,7 +76,7 @@
 
         <button role="encode-btn" type="button" name="button">Encode</button>
         <button role="decode-btn" type="button" name="button">Decode</button>
-        <button role="restart-btn">Restart</button>
+        <button role="restart-btn">Start over</button>
       </div>
 
       <div class="b64-view b64-hidden" role="result-view">
@@ -90,7 +86,7 @@
         <div role="encoding-output"></div>
         <button role="save-file-btn">Save as file</button>
         <button role="save-clipboard-btn">Copy to clipboard</button>
-        <button role="restart-btn">Restart</button>
+        <button role="restart-btn">Start over</button>
       </div>
     </div>
 
@@ -102,8 +98,8 @@
 
     </div>
 
-    <script type="text/javascript" src="js/b64.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+    <!-- <script type="text/javascript" src="js/b64.js"></script> -->
+    <script type="module" src="js/app.js"></script>
     <!-- <script type="text/javascript" src="js/c.js"></script> -->
 
   </body>
