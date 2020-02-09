@@ -1,17 +1,17 @@
-onmessage = function(e) {
-  alphabetBase64    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-  reBase64 = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
+self.addEventListener('message', (e) => {
+  const alphabetBase64    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+  const reBase64 = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
 
-  var blob = e.data[0];
+  let blob = e.data[0];
 
   handleDataConsumed = (event) => {
-    var s = new Uint8Array(event.target.result);
+    let s = new Uint8Array(event.target.result);
 
     postMessage(['start', s.length]);
 
     // this code based on polyfill from https://github.com/MaxArt2501/base64-js/blob/master/base64.js
     // mentioned at https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa
-    var bitmap, a, b, c,
+    let bitmap, a, b, c,
         result,
         i = 0,
         j = 0,
@@ -33,14 +33,14 @@ onmessage = function(e) {
 
     }
 
-    var out = rest ? result.slice(0, rest - 3) + "===".substring(rest) : result;
+    let out = rest ? result.slice(0, rest - 3) + "===".substring(rest) : result;
 
     postMessage(['end', out]);
   };
 
-  var fr = new FileReader(blob);
+  let fr = new FileReader(blob);
   fr.addEventListener("loadend", handleDataConsumed);
   fr.readAsArrayBuffer(blob);
 
   postMessage(['beforestart', undefined]);
-}
+});

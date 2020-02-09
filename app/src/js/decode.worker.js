@@ -1,24 +1,24 @@
-onmessage = function(e) {
+self.addEventListener('message', (e) => {
   alphabetBase64    = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
   reBase64 = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
 
-  var blob = e.data[0];
+  let blob = e.data[0];
 
   handleDataConsumed = (event) => {
-    var s = new Uint8Array(event.target.result);
+    let s = new Uint8Array(event.target.result);
 
 
     // atob can work with strings with whitespaces, even inside the encoded part,
     // but only \t, \n, \f, \r and ' ', which can be stripped.
-    var string = String(fr.result).replace(/[\t\n\f\r ]+/g, "");
+    let string = String(fr.result).replace(/[\t\n\f\r ]+/g, "");
     if (!reBase64.test(string))
-      postMessage(['error', new TypeError("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.")]);
+      postMessage(['error', new TypeError("The string to be decoded is not correctly encoded.")]);
 
     // Adding the padding if missing, for simplicity
     string += "==".slice(2 - (string.length & 3));
     postMessage(['start', string.length]);
 
-    var bitmap, result = [],
+    let bitmap, result = [],
         r1, r2, i = 0;
     for (; i < string.length;) {
         bitmap = alphabetBase64.indexOf(string.charAt(i++)) << 18 | alphabetBase64.indexOf(string.charAt(i++)) << 12 |
@@ -35,9 +35,9 @@ onmessage = function(e) {
     postMessage(['end', out]);
   }
 
-  var fr = new FileReader(blob);
+  let fr = new FileReader(blob);
   fr.addEventListener("loadend", handleDataConsumed);
   fr.readAsBinaryString(blob);
 
   postMessage(['beforestart', undefined]);
-}
+});

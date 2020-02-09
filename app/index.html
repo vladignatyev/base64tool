@@ -5,7 +5,9 @@
     <title></title>
   </head>
   <body>
+    <div class="hello">
 
+    </div>
     <style media="screen">
       .b64-view {
         transition: all 0.3s;
@@ -99,8 +101,15 @@
     </div>
 
     <!-- <script type="text/javascript" src="js/b64.js"></script> -->
-    <script type="module" src="js/app.js"></script>
+    <script src="dist/bundle.js"></script>
     <!-- <script type="text/javascript" src="js/c.js"></script> -->
 
+    <script type="text/javascript">
+      window.addEventListener('DOMContentLoaded', () => {
+        var view = document.querySelector('[role=b64-app]');
+        var vc = new b64app.AppController(view);
+        vc.init();
+      });
+    </script>
   </body>
 </html>

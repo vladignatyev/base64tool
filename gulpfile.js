@@ -46,7 +46,7 @@ gulp.task('img', function() {
 gulp.task('minjs', function () {
   return(gulp.src('app/js/*.js'))
     .pipe(uglify)
-    .pipe(gulp.dest('dist/js'));
+    .pipe(gulp.dest('app/dist/js'));
 });
 
 gulp.task('prebuild', async function() {
@@ -76,7 +76,7 @@ gulp.task('browser-sync', function() { // Создаем таск browser-sync
 gulp.task('watch', function() {
   gulp.watch('app/sass/**/*.sass', gulp.parallel('sass'));
 });
-gulp.task('default', gulp.parallel('sass', 'browser-sync', 'watch'));
+gulp.task('default', gulp.parallel('sass', 'browser-sync', 'watch', 'minjs'));
 
 gulp.task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'minjs'));
 
