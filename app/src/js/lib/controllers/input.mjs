@@ -3,7 +3,7 @@ import { errorStrings } from "../errors.mjs"
 
 
 export const InputViewController = function (bus, el) {
-  this.FILESIZE_LIMIT = 1024 * 1024 * 128;
+  this.FILESIZE_LIMIT = 1024 * 1024 * 512;
   this.el = el;
 
   this.textInput = $(el)("[role=textinput]");

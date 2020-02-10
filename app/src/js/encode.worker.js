@@ -17,7 +17,8 @@ self.addEventListener('message', (e) => {
         j = 0,
         rest = s.length % 3; // To determine the final padding
 
-    result = new Array(Math.ceil((s.length / 3)) | 0);
+    // result = new Array(Math.ceil(s.length / 3) | 0);
+    result = "";
 
     let k = 0;
 
@@ -26,16 +27,20 @@ self.addEventListener('message', (e) => {
         b = s[i++];
         c = s[i++];
         bitmap = (a << 16) | (b << 8) | c;
-        result[k] = alphabetBase64.charAt(bitmap >> 18 & 63) + alphabetBase64.charAt(bitmap >> 12 & 63) +
+        // result[k] = alphabetBase64.charAt(bitmap >> 18 & 63) + alphabetBase64.charAt(bitmap >> 12 & 63) +
+        //     alphabetBase64.charAt(bitmap >> 6 & 63) + alphabetBase64.charAt(bitmap & 63);
+        // k++;
+
+        result += alphabetBase64.charAt(bitmap >> 18 & 63) + alphabetBase64.charAt(bitmap >> 12 & 63) +
             alphabetBase64.charAt(bitmap >> 6 & 63) + alphabetBase64.charAt(bitmap & 63);
-        k++;
 
         if ((i % (256 * 1024)) == 0) {
           postMessage(['progress', i]);
         }
 
     }
-    let res2 = result.join('');
+    // let res2 = result.join('');
+    let res2 = result;
     let out = rest ? res2.slice(0, rest - 3) + "===".substring(rest) : res2;
 
     postMessage(['end', out]);

@@ -15,10 +15,14 @@ export const ResultViewController = function (bus, el) {
   this.outputView = $(el)('[role=encoding-output]');
   this.notificationView = $(el)('[role=notification]');
 
-  this.encodingResult = undefined;
-  this.decodingResult = undefined;
+  this.copyToClipboardBtn = $(el)('[role=save-clipboard-btn]');
+  this.saveFileBtn = $(el)('[role=save-file-btn]');
+
+  this.operationResult = undefined;
 
   this.restartBtn = $(el)('[role=restart-btn]');
+
+
 
   this.setOutputIsTrimmed = (trimmed) => {
     if (trimmed) {
@@ -40,7 +44,10 @@ export const ResultViewController = function (bus, el) {
 
     let outputMaxLength = this.OUTPUT_MAX_SIZE;
 
-    this.encodingResult = textResult.slice(0, outputMaxLength);
+    this.operationResult = ["encoded", new Blob([textResult], {type: 'text/plain'})];
+
+    this.copyToClipboardBtn.disabled = false;
+    this.saveFileBtn.disabled = false;
 
     if (textResult.length > outputMaxLength) {
       this.outputView.innerText = textResult.slice(0, outputMaxLength) + '...';
@@ -60,16 +67,50 @@ export const ResultViewController = function (bus, el) {
     binaryViewer.present(this.binaryPreview);
     asciiViewer.present(this.textPreview);
 
-    this.decodingResult = textResult;
+    this.copyToClipboardBtn.disabled = true;
+    this.saveFileBtn.disabled = false;
+
+    this.operationResult = ["decoded", new Blob([textResult], { type: 'application/octet-stream' })];
+
     this.outputView.innerText = '';
   }
   this.renderDecodingResult.bind(this);
 
   this.init = () => {
+    this.copyToClipboardBtn.disabled = true;
+    this.saveFileBtn.disabled = true;
+
     this.restartBtn.addEventListener('click', () => {
       let e = new Event("restart");
+      this.copyToClipboardBtn.disabled = true;
+      this.saveFileBtn.disabled = true;
+
       bus.dispatchEvent(e);
     });
+
+    this.copyToClipboardBtn.addEventListener('click', () => {
+      let item = {};
+      item[this.operationResult[1].type] = this.operationResult[1];
+      navigator.clipboard.write([ new ClipboardItem(item) ]);
+    });
+
+    this.saveFileBtn.addEventListener('click', () => {
+      let saver = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+      let blobURL = saver.href = URL.createObjectURL(this.operationResult[1]);
+      if (this.operationResult[0] == 'encoded') {
+        saver.download = 'result.base64.txt';
+      } else {
+        saver.download = 'result.base64.bin';
+      }
+
+      document.body.appendChild(saver);
+      saver.dispatchEvent(new MouseEvent("click"));
+      document.body.removeChild(saver);
+
+      // TODO:
+    });
+
+    let self = this;
   }
   this.init.bind(this);
 };
