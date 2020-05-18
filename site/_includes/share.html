@@ -1,0 +1,27 @@
+<div class="uk-child-width-auto uk-grid-small uk-grid uk-flex-center uk-margin-medium-top" data-uk-grid>
+  {% if site.social_share.twitter %}
+    <div>
+      <a class="sharer uk-link-muted" data-sharer="twitter" data-title="{{ page.title }}" data-url="{{ page.url | absolute_url }}"><span data-uk-icon="icon: twitter; ratio: 1.2"></span></a>
+    </div>
+  {% endif %}
+  {% if site.social_share.facebook %}
+    <div>
+      <a class="sharer uk-link-muted" data-sharer="facebook" data-url="{{ page.url | absolute_url }}"><span data-uk-icon="icon: facebook; ratio: 1.2"></span></a>
+    </div>
+  {% endif %}
+  {% if site.social_share.linkedin %}
+    <div>
+      <a class="sharer uk-link-muted" data-sharer="linkedin" data-url="{{ page.url | absolute_url }}"><span data-uk-icon="icon: linkedin; ratio: 1.2"></span></a>
+    </div>
+  {% endif %}
+  {% if site.social_share.pinterest %}
+    <div>
+      <a class="sharer uk-link-muted" data-sharer="pinterest" data-url="{{ page.url | absolute_url }}"><span data-uk-icon="icon: pinterest; ratio: 1.2"></span></a>
+    </div>
+  {% endif %}
+  {% if site.social_share.reddit %}
+    <div>
+      <a class="sharer uk-link-muted" data-sharer="reddit" data-url="{{ page.url | absolute_url }}"><span data-uk-icon="icon: reddit; ratio: 1.2"></span></a>
+    </div>
+  {% endif %}
+</div>

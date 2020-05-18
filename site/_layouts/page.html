@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+{% if page.width == 'full' %}
+  {{ content }}
+{% else %}
+<article class="uk-article">
+
+  {% unless page.header %}
+    <h1 class="uk-article-title">{{ page.title | escape }}</h1>
+  {% endunless %}
+
+  <div class="uk-article-content">
+      {{ content }}
+  </div>
+
+</article>
+<script>
+  // Table of contents scroll to
+  UIkit.scroll('#markdown-toc a', {
+    duration: 400,
+    offset: 100
+  });
+</script>
+{% endif %}

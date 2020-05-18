@@ -1,0 +1,52 @@
+<footer class="uk-section uk-section-large uk-section-{{ site.footer.style | default: 'muted' }} uk-text-muted">
+  <div class="uk-container">
+    <div class="uk-grid-margin-large" data-uk-grid>
+      <div class="uk-width-medium@l uk-width-1-3@m">
+        <div class="uk-margin">
+          <a href="{{ "/" | relative_url }}">
+            {% if site.logo_light or site.logo %}
+              {% if site.logo_light %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="uk-logo-inverse" data-src="{{ site.uploads | absolute_url }}{{ site.logo_light }}" alt="{{ site.title }}" data-uk-img>
+              {% endif %}
+              {% if site.logo %}
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ site.uploads | absolute_url }}{{ site.logo }}" alt="{{ site.title }}" data-uk-img>
+              {% endif %}
+            {% else %}
+              {{ site.title }}
+            {% endif %}
+          </a>
+        </div>
+        <div class="uk-margin uk-text-small copyright">{{ site.footer.copyright }}</div>
+        {% if site.social_networks %}
+          <div class="uk-margin">
+            <div data-uk-grid class="uk-child-width-auto uk-grid-small">
+              {% include social-networks.html %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      {% for column in site.data.[site.template].footer.columns %}
+        <div class="uk-width-expand@l uk-width-1-3@m">
+          <h5>{{ column.title }}</h5>
+          <ul class="uk-list uk-text-small">
+            {% for link in column.links %}
+              {% if link.url contains 'http' %}
+                {% assign domain = '' %}
+              {% else %}
+                {% assign domain = '' | relative_url %}
+              {% endif %}
+              {% if link.url == page.url %}
+                {% assign current = ' class="uk-active"' %}
+              {% else %}
+                {% assign current = null %}
+              {% endif %}
+              {% if link.title %}
+                <li{{ current }}><a class="uk-link-muted" href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" rel="noopener" {% endif %}>{{ link.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+   </div> 
+</footer>

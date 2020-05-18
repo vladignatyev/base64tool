@@ -1,0 +1,43 @@
+{% include partials/section-open.html 
+  section_size=include.section_size
+  section_padding_remove=include.section_padding_remove
+  section_header_align=include.section_header_align
+  section_height=include.section_height
+  section_header_color=include.section_header_color
+  section_container=include.section_container
+  section_title=include.section_title
+  section_subtitle=include.section_subtitle
+  section_background=include.section_background
+  section_image=include.section_image
+  section_video=include.section_video
+  section_image_align=include.section_image_align
+  section_overlay=include.section_overlay
+  section_content_align=include.section_content_align
+  section_content_color=include.section_content_color
+%}
+<div class="uk-child-width-1-2@s uk-child-width-{{ include.grid | default: '1-4' }}@m{% if include.gutter %} uk-grid-{{ include.gutter }}{% endif %}" data-uk-grid="masonry: true"{% if include.lightbox %} data-uk-lightbox="animation: slide"{% endif %}>
+  {% for image in site.static_files %}
+    {% if image.path contains include.gallery %}
+      <div>
+        {% if include.lightbox %}
+          <div class="uk-inline uk-light uk-transition-toggle">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image.path | relative_url }}" alt="{{ image.basename | replace: '-', ' ' | capitalize }}" data-uk-img>
+            <a class="uk-overlay uk-overlay-primary uk-position-cover uk-transition-fade" href="{{ image.path | relative_url }}"{% if include.caption %} data-caption="{{ image.basename | replace: '-', ' ' | capitalize }}"{% endif %}>
+							<div class="uk-position-center">
+								<span data-uk-icon="icon: plus; ratio: 1.5"></span>
+							</div>
+            </a>
+          </div>
+        {% else %}
+          <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ image.path | relative_url }}" alt="{{ image.basename | replace: '-', ' ' | capitalize }}" data-uk-img>
+        {% endif %}
+      </div>      
+    {% endif %}
+  {% endfor %}
+</div>
+{% include partials/section-close.html 
+  section_size=include.section_size 
+	section_background=include.section_background
+	section_image=include.section_image
+	section_video=include.section_video
+%}

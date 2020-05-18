@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+
+    {% include head.html %}
+
+    <body>
+
+    {% include partials/header.html %}
+
+    {% assign width = page.width | default: 'default' %}
+    {% assign sidebar_left = page.sidebar.left %}
+    {% assign sidebar_right = page.sidebar.right %}
+
+    {% if width == 'full' %}
+      {{ content }}
+    {% else %}
+      <div class="uk-section{% if page.section %} uk-section-{{ page.section }}{% endif %}">
+        <div class="uk-container{% if width %} uk-container-{{ width }}{% endif %}">
+          {% if sidebar_left %}
+            <div class="uk-flex uk-grid-large" data-uk-grid>
+              <div class="uk-width-expand@m">
+                {{ content }}
+              </div>
+              <aside class="uk-width-1-3@m uk-flex-first@m">
+                {% include sidebar.html %}
+              </aside>
+            </div>
+          {% elsif sidebar_right %}
+            <div class="uk-grid-large" data-uk-grid>
+              <div class="uk-width-expand@m">
+                {{ content }}
+              </div>
+              <aside class="uk-width-1-3@m">
+                {% include sidebar.html %}
+              </aside>
+            </div>
+          {% else %}
+            {{ content }}
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    {% if site.footer.layout == 'columns' %}
+      {% include partials/footer-columns.html %}
+    {% else %}
+      {% include partials/footer-center.html %}
+    {% endif %}
+
+    {% include partials/nav-mobile.html %}
+
+    {% include hook-pre-closing-body.html %}
+
+    </body>
+
+</html>

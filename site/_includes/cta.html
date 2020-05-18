@@ -1,0 +1,87 @@
+{% include partials/section-open.html 
+  section_size=include.section_size
+  section_padding_remove=include.section_padding_remove
+  section_header_align=include.section_header_align
+  section_height=include.section_height
+  section_header_color=include.section_header_color
+  section_container=include.section_container
+  section_title=include.section_title
+  section_subtitle=include.section_subtitle
+  section_background=include.section_background
+  section_image=include.section_image
+  section_video=include.section_video
+  section_image_align=include.section_image_align
+  section_overlay=include.section_overlay
+  section_content_align=include.section_content_align
+  section_content_color=include.section_content_color
+%}
+{%- assign block = site.blocks | where:"slug", include.block | first -%}
+{% if include.layout == '1' %}
+  <div data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
+    <h2 class="section-title uk-margin-remove">{{ block.title }}</h2>
+    {% if block.subtitle %}
+      <p class="uk-margin-top uk-margin-remove-bottom uk-text-lead">{{ block.subtitle }}</p>
+    {% endif %}
+    {% unless block.content == blank %}<div class="uk-margin-medium-top">{{ block.content }}</div>{% endunless %}
+    {% if block.video %}
+    <div class="uk-margin-medium-top" data-uk-lightbox>
+      <a href="{{ block.video }}" data-caption="{{ block.title }}"><div class="icon">{% include icons/ios-play-button-circled.svg %}</div></a>
+    </div>
+    {% endif %}
+    {% if block.button %}
+      <a class="uk-margin-medium-top uk-button uk-button-xlarge uk-button-{{ block.button.style | default: 'primary' }}" href="{{ domain }}{{ block.button.url }}"{% if block.button.blank %} target="_blank" rel="noopener"{% endif %}>{{ block.button.text }}</a>
+    {% endif %}
+  </div>
+{% elsif include.layout == '2' %}
+  <div class="uk-grid-large uk-flex-middle" data-uk-grid data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
+    <div class="uk-width-expand@m">
+      {% if block.title %}
+        <h2 class="section-title uk-margin-remove">{{ block.title }}</h2>
+      {% endif %}
+      {% if block.subtitle %}
+        <p class="uk-text-lead uk-margin-small">{{ block.subtitle }}</p>
+      {% endif %}
+      {% unless block.content == blank %}<div class="uk-margin-medium-top">{{ block.content }}</div>{% endunless %}
+    </div>
+    <div class="uk-width-auto@m">
+      {% if block.video %}
+      <div class="uk-margin-medium-top" data-uk-lightbox>
+        <a href="{{ block.video }}" data-caption="{{ block.title }}"><div class="icon">{% include icons/ios-play-button-circled.svg %}</div></a>
+      </div>
+      {% endif %}
+      {% if block.button %}
+        <a class="uk-button uk-button-xlarge uk-button-{{ block.button.style | default: 'primary' }}" href="{{ domain }}{{ block.button.url }}"{% if block.button.blank %} target="_blank" rel="noopener"{% endif %}>{{ block.button.text }}</a>
+      {% endif %}
+    </div>
+  </div>
+{% elsif include.layout == '3' %}
+  <div class="uk-grid-large uk-flex-middle" data-uk-grid data-uk-scrollspy="cls: uk-animation-slide-bottom; repeat: true">
+    <div class="uk-width-expand@m">
+      {% if block.title %}
+        <h2 class="section-title uk-margin-remove">{{ block.title }}</h2>
+      {% endif %}
+      {% if block.subtitle %}
+        <p class="uk-text-lead uk-margin-small-top">{{ block.subtitle }}</p>
+      {% endif %}
+    </div>
+    <div class="uk-width-auto@m">
+      {% if block.video %}
+      <div data-uk-lightbox>
+        <a href="{{ block.video }}" data-caption="{{ block.title }}"><div class="icon-cta">{% include icons/ios-play-button-circled.svg %}</div></a>
+      </div>
+      {% endif %}
+      {% if block.button %}
+        <a class="uk-button uk-button-xlarge uk-button-{{ block.button.style | default: 'primary' }}" href="{{ domain }}{{ block.button.url }}"{% if block.button.blank %} target="_blank" rel="noopener"{% endif %}>{{ block.button.text }}</a>
+      {% endif %}
+    </div>
+    <div class="uk-width-expand@m">
+      {% unless block.content == blank %}<div class="uk-article-content">{{ block.content }}</div>{% endunless %}
+    </div>    
+  </div>
+{% endif %}
+{% include partials/section-close.html 
+  section_size=include.section_size 
+	section_background=include.section_background
+	section_image=include.section_image
+	section_video=include.section_video
+%}

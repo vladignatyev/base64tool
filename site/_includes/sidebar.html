@@ -1,0 +1,59 @@
+{% if page.sidebar.left %}
+  {% assign sidebar = page.sidebar.left %}
+{% elsif page.sidebar.right %}
+  {% assign sidebar = page.sidebar.right %}
+{% endif %}
+
+
+{% for widget in site.data.[site.template].sidebar.[sidebar] %}
+  <div class="uk-margin-large-bottom">
+    {% case widget.widget %}
+
+       {% when 'tagged' %}
+
+        {% if widget.title %}<h4>{{ widget.title }}</h4>{% endif %}
+        {% include widget-tagged.html type=widget.type primary_title=widget.primary.title primary_tag=widget.primary.tag secondary_title=widget.secondary.title secondary_tag=widget.secondary.tag %}
+
+      {% when 'latest' %}
+
+        {% if widget.title %}<h4>{{ widget.title }}</h4>{% endif %}
+        {% include widget-latest.html type=widget.type count=widget.count %}
+
+      {% when 'block' %}
+
+        {%- assign block = site.blocks | where:"slug", widget.block | first -%}
+        {% if widget.title %}<h4>{{ widget.title }}</h4>{% endif %}
+        <div class="line-height-medium{% if block.align %} uk-text-{{ block.align }}{% endif %}">{{ block.content }}</div>
+
+      {% when 'author' %}
+
+        {% include widget-author.html author=widget.author %}
+
+      {% when 'navigation' %}
+
+          {% for nav in widget.nav %}
+            {% if nav.title %}<h4 class="uk-margin-small-bottom">{{ nav.title }}</h4>{% endif %}
+            <ul class="uk-nav">
+              {% if nav.links != null %}
+                {% for link in nav.links %}
+
+                  {% if link.url contains 'http' %}
+                      {% assign domain = '' %}
+                  {% else %}
+                      {% assign domain = '' | relative_url %}
+                  {% endif %}
+
+                  <li><a href="{{ domain }}{{ link.url }}" class="uk-link-text"{% if link.url contains 'http' %} target="_blank" rel="noopener" {% endif %}>{{ link.title }}</a></li>
+
+                {% endfor %}
+              {% endif %}
+            </ul>
+          {% endfor %}
+
+      {% else %}
+
+         There is no such widget type! Valid widget types: recent, block, author, navigation.
+
+    {% endcase %}
+  </div>
+{% endfor %}

@@ -1,0 +1,30 @@
+<div class="uk-container uk-container-small">
+    <h4 class="uk-margin-remove-bottom uk-margin-large-top">{{ site.data[site.template].translation[site.lang].related_posts | default: "Related Posts" }}</h4>
+    {% assign maxRelated = 4 %}
+    {% assign minCommonTags =  1 %}
+    {% assign maxRelatedCounter = 0 %}
+    <ul class="uk-list uk-grid-large uk-child-width-1-2@m" data-uk-grid>
+        {% for post in site.posts %}
+
+            {% assign sameTagCount = 0 %}
+            {% assign commonTags = '' %}
+
+            {% for category in post.categories %}
+                {% if post.url != page.url %}
+                    {% if page.categories contains category %}
+                        {% assign sameTagCount = sameTagCount | plus: 1 %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {% if sameTagCount >= minCommonTags %}
+                <li class="uk-margin-small-top"><a class="uk-link-text" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+                {% assign maxRelatedCounter = maxRelatedCounter | plus: 1 %}
+                {% if maxRelatedCounter >= maxRelated %}
+                    {% break %}
+                {% endif %}
+            {% endif %}
+    
+        {% endfor %}
+    </ul>                    
+</div>

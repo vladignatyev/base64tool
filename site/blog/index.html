@@ -1,0 +1,90 @@
+---
+layout: default
+title: Blog Grid Boxed
+subtitle: Set number of card columns, chose from sigle layout or left or right sidebar
+section: large
+sidebar: 
+  right: blog
+grid: 1-2
+navbar:
+  transparent: true
+  transparent_color: light
+header:
+  layout: center
+  background_image: header-7.jpg
+  background_overlay: "rgba(0, 0, 0, 0.5)"
+  header_size: xlarge
+  color: light
+  heading_size: medium
+---
+
+{% if page.grid == '1-1' %}
+  {% assign grid = 'uk-child-width-1-1' %}
+{% elsif page.grid == '1-2' %}
+  {% assign grid = 'uk-child-width-1-2@m' %}
+{% elsif page.grid == '1-3' or page.grid == '1-4' %}
+  {% capture grid %}
+    uk-child-width-1-2@s uk-child-width-{{ page.grid }}@m
+  {% endcapture %}
+{% elsif page.grid == '1-5' or page.grid == '1-6' %}
+  {% capture grid %}
+    uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-{{ page.grid }}@l
+  {% endcapture %}
+{% else %}
+  {% assign grid = 'uk-child-width-1-2@m' %}
+{% endif %}
+
+<div class="{{ grid }}{% if page.gutter %} uk-grid-{{ page.gutter }}{% endif %} uk-grid-match" data-uk-grid>
+  {% if page.featured.tag %}
+    <div class="uk-width-1-1">
+      {% for post in site.posts %}
+        {% if post.tags contains page.featured.tag %}
+          <div class="uk-card uk-card-default uk-card-blog">
+            {% if post.image %}
+              <div class="uk-card-media-top uk-inline">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if post.image contains 'http' %}{{ post.image }}{% else %}{{ site.uploads | absolute_url }}{{ post.image }}{% endif %}" alt="{{ post.title }}" data-uk-img>
+                <a class="uk-overlay uk-position-cover" href="{{ post.url | relative_url }}"></a>
+              </div>
+            {% endif %}
+            <div class="uk-card-body">
+              <h3 class="uk-card-title"><a class="uk-link-heading" href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+            </div>
+            <div class="uk-card-footer">
+              <a class="uk-link-reset uk-text-small text-400" href="{{ post.url | relative_url }}">{{ site.data.translation[site.lang].read_more | default: "Read more" }}</a>
+              {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+              <span class="uk-text-small uk-text-muted uk-align-right">{{ post.date | date: date_format }}</span>
+            </div>                    
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% for post in paginator.posts %}
+    <div>
+      <div class="uk-card uk-card-default uk-card-blog">
+        {% if post.image %}
+          <div class="uk-card-media-top uk-inline">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if post.image contains 'http' %}{{ post.image }}{% else %}{{ site.uploads | absolute_url }}{{ post.image }}{% endif %}" alt="{{ post.title }}" data-uk-img>
+            <a class="uk-overlay uk-position-cover" href="{{ post.url | relative_url }}"></a>
+          </div>
+        {% endif %}
+        <div class="uk-card-body">
+          <h3 class="uk-card-title"><a class="uk-link-heading" href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        </div>
+        <div class="uk-card-footer">
+          <a class="uk-link-reset uk-text-small text-400" href="{{ post.url | relative_url }}">{{ site.data.translation[site.lang].read_more | default: "Read more" }}</a>
+          {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+          <span class="uk-text-small uk-text-muted uk-align-right">{{ post.date | date: date_format }}</span>
+        </div>                    
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<ul class="uk-pagination uk-flex-center uk-margin-large-top">
+  {% if paginator.previous_page %}
+  <li><h5 class="uk-margin-remove"><a href="{{ paginator.previous_page_path | relative_url }}">&larr; {{ site.data[site.template].translation[site.lang].previous | default: "Previous" }}</a></h5></li>
+  {% endif %} {% if paginator.next_page %}
+  <li><h5 class="uk-margin-remove"><a href="{{ paginator.next_page_path | relative_url }}">{{ site.data[site.template].translation[site.lang].next | default: "Next" }} &rarr;</a></h5></li>
+  {% endif %}
+</ul>

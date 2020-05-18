@@ -76,9 +76,12 @@ gulp.task('browser-sync', function() { // Создаем таск browser-sync
 gulp.task('watch', function() {
   gulp.watch('app/sass/**/*.sass', gulp.parallel('sass'));
 });
-gulp.task('default', gulp.parallel('sass', 'browser-sync', 'watch', 'minjs'));
+// gulp.task('default', gulp.parallel('sass', 'browser-sync', 'watch', 'minjs'));
+gulp.task('default', gulp.series(function(){
+  return gulp.src('modules/base64/dist/**/*').pipe(gulp.dest('app/dist/'))
+}, gulp.parallel('browser-sync', 'watch')));
 
-gulp.task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'minjs'));
+// gulp.task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'minjs'));
 
 // gulp.task('jekyll', gulp.series(gulp.task('build'), function() {
 //   return gulp.src('dist/style.css').pipe(cleanCSS({compatibility: 'ie8'})).pipe(gulp.dest('jekyll/css/'))

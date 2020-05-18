@@ -1,0 +1,34 @@
+{% assign post_type = include.type | default: 'posts' %}
+
+<ul class="uk-child-width-expand" data-uk-tab>
+  {% if include.primary_title %}
+  <li class="uk-active"><a href="#">{{ include.primary_title }}</a></li>
+  {% endif %}
+  {% if include.secondary_title %}      
+  <li><a href="#">{{ include.secondary_title }}</a></li>
+  {% endif %}
+</ul>
+<ul class="uk-switcher article-content">
+  {% if include.primary_tag %}
+    <li>
+      <ul class="uk-list">
+        {% for post in site[post_type] %}
+          {% if post.tags contains include.primary_tag %}
+            <li><a class="uk-link-text" href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+  {% if include.secondary_tag %}      
+    <li>
+      <ul class="uk-list">
+        {% for post in site[post_type] %}
+          {% if post.tags contains include.secondary_tag %}
+            <li><a class="uk-link-text" href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+</ul>

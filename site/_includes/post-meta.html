@@ -1,0 +1,27 @@
+{% if page.author %}
+  {% assign author = site.authors[page.author] %}
+{% else %}
+  {% assign author = site.author %}
+{% endif %}
+
+<div class="uk-article-meta" itemscope itemtype="http://schema.org/Person">
+  <div data-uk-grid class="uk-child-width-auto uk-grid-small uk-flex uk-flex-middle">
+
+    {% if author.avatar %}
+      <div>
+        <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="avatar" data-src="{% if author.avatar contains 'http' %}{{ author.avatar }}{% else %}{{ site.uploads | absolute_url }}{{ author.avatar }}{% endif %}" alt="{{ author.name }}" itemprop="image" data-uk-img>
+      </div>
+    {% endif %}
+
+    <div>
+      {% if author.name %}
+        Written by <span itemprop="name"><span itemprop="name"><strong>{{ author.name }}</strong></span></span>
+      {% endif %}
+      <time datetime="{{ page.date | date_to_xmlschema }}">
+          {% assign date_format = site.date_format | default: "%b %-d, %Y" %}
+          {{ page.date | date: date_format }}
+      </time>
+    </div>
+
+  </div>
+</div>

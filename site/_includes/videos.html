@@ -1,0 +1,39 @@
+{% include partials/section-open.html 
+  section_size=include.section_size
+  section_padding_remove=include.section_padding_remove
+  section_header_align=include.section_header_align
+  section_height=include.section_height
+  section_header_color=include.section_header_color
+  section_container=include.section_container
+  section_title=include.section_title
+  section_subtitle=include.section_subtitle
+  section_background=include.section_background
+  section_image=include.section_image
+  section_video=include.section_video
+  section_image_align=include.section_image_align
+  section_overlay=include.section_overlay
+  section_content_align=include.section_content_align
+  section_content_color=include.section_content_color
+%}
+<div class="uk-child-width-{{ include.grid | default: '1-3' }}@m{% if include.gutter %} uk-grid-{{ include.gutter }}{% endif %} uk-grid-match uk-text-center uk-margin-medium-top" data-uk-grid data-uk-lightbox>
+  {% for block in site.blocks %}
+    {% if block.slug contains include.block %}
+    <div>
+      <div class="uk-card uk-card-{{ include.card_style | default: 'none' }} uk-card-body uk-card-hover uk-inline">
+        <a class="uk-position-cover" href="{{ block.video }}" data-caption="{{ block.title }}"></a>
+        <div class="uk-card-media" {% if include.icon_color %} style="color: {{ include.icon_color }}"{% endif %}>{% include icons/ios-play-button-circled.svg %}</div>
+        <h3 class="uk-card-title uk-margin-top uk-margin-small-bottom">{{ block.title }}</h3>
+        {% unless block.content == blank %}
+          <div class="card-content text-smaller">{{ block.content }}</div>
+        {% endunless %}
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+</div>
+{% include partials/section-close.html 
+  section_size=include.section_size 
+	section_background=include.section_background
+	section_image=include.section_image
+	section_video=include.section_video
+%}

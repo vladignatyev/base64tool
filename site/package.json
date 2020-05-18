@@ -1,0 +1,37 @@
+{
+  "name": "jekyll-theme-eon",
+  "version": "1.0.0",
+  "description": "Advanced Jekyll theme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ivanchromjak/jekyll-theme-eon.git"
+  },
+  "author": "Ivan Chromjak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivanchromjak/jekyll-theme-eon/issues"
+  },
+  "homepage": "https://plus.jekyll.plus",
+  "dependencies": {
+    "instafetch.js": "^1.5.0",
+    "sharer.js": "^0.3.8",
+    "simple-jekyll-search": "^1.7.2",
+    "system-font-css": "^2.0.2",
+    "uikit": "^3.3.6"
+  },
+  "devDependencies": {
+    "jshint": "^2.10.2",
+    "ncp": "latest",
+    "uglify-js": "^3.4.10",
+    "watch": "^1.0.2"
+  },
+  "scripts": {
+    "copy:sass": "ncp node_modules/uikit/src/scss/ _sass/uikit/ && ncp node_modules/system-font-css/ _sass/system-font-css/",
+    "lint": "jshint assets/js/custom.js",
+    "uglify": "uglifyjs node_modules/uikit/dist/js/uikit.js node_modules/uikit/dist/js/uikit-icons.js node_modules/simple-jekyll-search/dest/simple-jekyll-search.js node_modules/instafetch.js/dist/instafetch.js node_modules/sharer.js/sharer.js assets/js/custom.js -m -c -o assets/js/main.min.js",
+    "concat": "uglifyjs node_modules/uikit/dist/js/uikit.js node_modules/uikit/dist/js/uikit-icons.js node_modules/simple-jekyll-search/dest/simple-jekyll-search.js node_modules/instafetch.js/dist/instafetch.js node_modules/sharer.js/sharer.js assets/js/custom.js -b -o assets/js/main.js",
+    "build": "npm run lint && npm run uglify && npm run concat",
+    "watch": "watch 'npm run build' assets/js/custom.js",
+    "postinstall": "npm run copy:sass && npm run build"
+  }
+}

@@ -1,0 +1,134 @@
+{% include partials/section-open.html 
+  section_size=include.section_size
+  section_padding_remove=include.section_padding_remove
+  section_header_align=include.section_header_align
+  section_height=include.section_height
+  section_header_color=include.section_header_color
+  section_container=include.section_container
+  section_title=include.section_title
+  section_subtitle=include.section_subtitle
+  section_background=include.section_background
+  section_image=include.section_image
+  section_video=include.section_video
+  section_image_align=include.section_image_align
+  section_overlay=include.section_overlay
+  section_content_align=include.section_content_align
+  section_content_color=include.section_content_color
+%}
+{% if include.grid == '1-1' %}
+  {% assign grid = 'uk-child-width-1-1' %}
+{% elsif include.grid == '1-2' %}
+  {% assign grid = 'uk-child-width-1-2@m' %}
+{% elsif include.grid == '1-3' or include.grid == '1-4' %}
+  {% capture grid %}
+    uk-child-width-1-2@s uk-child-width-{{ include.grid }}@m
+  {% endcapture %}
+{% elsif include.grid == '1-5' or include.grid == '1-6' %}
+  {% capture grid %}
+    uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-{{ include.grid }}@l
+  {% endcapture %}
+{% else %}
+  {% assign grid = 'uk-child-width-1-2@s uk-child-width-1-3@m uk-child-width-1-6@l' %}
+{%- endif -%}
+<div data-uk-slider="{% if include.center %}center: true;{% endif %}{% if include.autoplay %} autoplay: true;{% endif %}{% if include.sets %} sets: true;{% endif %}" tabindex="-1">
+	<div class="uk-position-relative">
+		<div class="uk-visible-toggle uk-slider-container{% if include.card_style == 'default' %} slider-card-shadow-fix{% endif %}{% if include.color == 'light' %} uk-light{% endif %}">
+			<ul class="{{ grid }} uk-slider-items uk-grid uk-grid-match{% if include.gutter %} uk-grid-{{ include.gutter }}{% endif %} uk-flex uk-flex-middle">
+			{% assign blocks = (site.blocks | sort: 'card[slug]') %}
+			{% for block in blocks %}
+				{% if block.slug contains include.block %}
+					<li>
+            {% if include.media == 'left' %}
+              <div class="uk-card{% unless block.icon %} uk-card-large{% endunless %} uk-card-{{ include.card_style | default: 'none' }} uk-grid-collapse uk-margin{% if block.icon %} card-icon{% endif %}" data-uk-grid>
+                <div class="uk-card-media-left{% if block.icon %} uk-width-auto@m uk-flex uk-flex-middle{% if include.card_style %} uk-padding{% endif %}{% if include.section_content_align %} uk-flex-{{ include.section_content_align }}{% endif %}{% else %} uk-width-1-2@m{% endif %}">
+                  {% if block.icon %}
+                    {% include icons/{{ block.icon }} %}
+                  {% elsif block.image %}
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if block.image contains 'http' %}{{ block.image }}{% else %}{{ site.uploads | absolute_url }}{{ block.image }}{% endif %}" alt="{{ block.title }}" data-uk-img>
+                  {% endif %}
+                </div>
+                <div class="uk-flex uk-flex-middle{% if include.section_content_align %} uk-flex-{{ include.section_content_align }}{% endif %} uk-width-expand@m">
+                  <div class="uk-card-body">
+                    <h3 class="{% if block.icon %}uk-card-title{% else %}uk-h2{% endif %}">{{ block.title }}</h3>
+                    {{ block.content }}
+                  </div>
+                </div>
+              </div>
+            {% elsif include.media == 'right' %}
+              <div class="uk-card{% unless block.icon %} uk-card-large{% endunless %} uk-card-{{ include.card_style | default: 'none' }} uk-grid-collapse uk-margin{% if block.icon %} card-icon{% endif %}" data-uk-grid>
+                <div class="uk-flex-last@m uk-card-media-right{% if block.icon %} uk-width-auto@m uk-flex uk-flex-middle{% if include.card_style %} uk-padding{% endif %}{% if include.section_content_align %} uk-flex-{{ include.section_content_align }}{% endif %}{% else %} uk-width-1-2@m{% endif %}">
+                  {% if block.icon %}
+                    {% include icons/{{ block.icon }} %}
+                  {% elsif block.image %}
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if block.image contains 'http' %}{{ block.image }}{% else %}{{ site.uploads | absolute_url }}{{ block.image }}{% endif %}" alt="{{ block.title }}" data-uk-img>
+                  {% endif %}
+                </div>
+                <div class="uk-flex uk-flex-middle{% if include.section_content_align %} uk-flex-{{ include.section_content_align }}{% endif %} uk-width-expand@m">
+                  <div class="uk-card-body">
+                    <h3 class="{% if block.icon %}uk-card-title{% else %}uk-h2{% endif %}">{{ block.title }}</h3>
+                    {{ block.content }}
+                  </div>
+                </div>
+              </div>
+            {% elsif include.media == 'top' %}
+              <div class="uk-card uk-card-{{ include.card_style | default: 'none' }}{% if block.icon %} card-icon{% endif %}">
+                {% if block.icon or block.image %}
+                  <div class="uk-card-media-top{% if block.icon and include.card_style %} uk-padding uk-padding-remove-bottom{% endif %}">
+                    {% if block.icon %}
+                      {% include icons/{{ block.icon }} %}
+                    {% elsif block.image %}
+                    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if block.image contains 'http' %}{{ block.image }}{% else %}{{ site.uploads | absolute_url }}{{ block.image }}{% endif %}" alt="{{ block.title }}" data-uk-img>
+                    {% endif %}
+                  </div>
+                {% endif %}
+                <div class="uk-card-body">
+                  <h3 class="uk-card-title">{{ block.title }}</h3>
+                  {% if block.heading %}
+                    <h4 class="uk-heading-medium uk-margin">{{ block.heading }}</h4>
+                  {% endif %}
+                  {{ block.content }}
+                </div>
+              </div>
+						{% else %}
+              <div class="uk-panel">
+                <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if block.image contains 'http' %}{{ block.image }}{% else %}{{ site.uploads | absolute_url }}{{ block.image }}{% endif %}" alt="{{ block.title }}" data-uk-img>
+                <div class="uk-position-center uk-panel">{% unless include.display_title == "false" %}<h3 class="uk-card-title-">{{ block.title }}</h3>{% endunless %}</div>
+              </div>
+            {% endif %}
+					</li>
+				{% endif %}
+			{% endfor %}
+			</ul>
+
+		</div>
+
+    {% if include.navigation == 'outside' %}
+      <div class="uk-hidden@m{% if include.card_style == 'secondary' or include.card_style == 'primary' %} uk-light{% endif %}">
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" aria-label="Previous" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" aria-label="Next" data-uk-slidenav-next data-uk-slider-item="next"></a>
+      </div>
+      <div class="uk-visible@m">
+        <a class="uk-position-center-left-out uk-position-small uk-hidden-hover" href="#" aria-label="Previous" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        <a class="uk-position-center-right-out uk-position-small uk-hidden-hover" href="#" aria-label="Next" data-uk-slidenav-next data-uk-slider-item="next"></a>
+      </div>
+    {% else %}
+      <div{% if include.card_style == 'secondary' or include.card_style == 'primary' %} class="uk-ligh"{% endif %}>
+        <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" aria-label="Previous" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+        <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" aria-label="Next" data-uk-slidenav-next data-uk-slider-item="next"></a>
+      </div>
+    {% endif %}
+
+	</div>
+
+  {% if include.dotnav %}
+    <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin-medium-top"></ul>
+  {% endif %}
+
+</div>
+
+{% include partials/section-close.html 
+  section_size=include.section_size 
+	section_background=include.section_background
+	section_image=include.section_image
+	section_video=include.section_video
+%}

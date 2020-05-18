@@ -1,0 +1,72 @@
+{% include partials/section-open.html 
+  section_size=include.section_size
+  section_padding_remove=include.section_padding_remove
+  section_header_align=include.section_header_align
+  section_height=include.section_height
+  section_header_color=include.section_header_color
+  section_container=include.section_container
+  section_title=include.section_title
+  section_subtitle=include.section_subtitle
+  section_background=include.section_background
+  section_image=include.section_image
+  section_video=include.section_video
+  section_image_align=include.section_image_align
+  section_overlay=include.section_overlay
+  section_content_align=include.section_content_align
+  section_content_color=include.section_content_color
+%}
+
+{% assign topics = '' %}
+
+{% for post in site.portfolio %}
+  {% assign t = post.topics | join: "," %}
+  {% if t != "" %}
+    {% capture topics %}{{topics}}{{t}},{% endcapture %}
+  {% endif %}
+{% endfor %}
+
+{% assign topics = topics | split: "," | uniq | sort: self %}
+
+{% if include.topic %}
+  {% assign portfolio = site.portfolio | where: "topics", include.topic %}
+{% else %}
+  {% assign portfolio = site.portfolio %}
+{% endif %}
+  <div data-uk-filter="target: [data-uk-grid]; animation: 500">
+		{% if include.filter %}
+			<ul class="uk-subnav uk-subnav-pill uk-flex uk-flex-center uk-margin-medium-bottom">
+				<li class="uk-active" data-uk-filter-control><a href="#">All</a></li>
+				{% for topic in topics %}
+					<li data-uk-filter-control="[data-topic*='{{ topic }}']"><a href="#">{{ topic | capitalize }}</a></li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+
+		<ul class="uk-child-width-1-2 uk-child-width-{{ include.grid | default: '1-4' }}@m{% if include.gutter %} uk-grid-{{ include.gutter }}{% endif %} uk-text-center" data-uk-grid="masonry: true">
+			{% for post in portfolio %}
+				<li data-topic="{{ post.topics }}">
+					<div class="uk-inline uk-light uk-transition-toggle">
+						<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{% if post.image contains 'http' %}{{ post.image }}{% else %}{{ site.uploads | absolute_url }}{{ post.image }}{% endif %}" alt="{{ post.title }}" data-uk-img>
+						<a href="{{ post.url | absolute_url }}" class="uk-overlay uk-overlay-primary uk-position-cover uk-transition-fade">
+							<div class="uk-position-center">
+								{% if include.title == 'bellow' %}
+									<span data-uk-icon="icon: link; ratio: 1.5"></span>
+								{% else %}
+									<h5 class="uk-text-uppercase uk-margin-remove">{{ post.title }}</h5>
+								{% endif %}
+							</div>
+						</a>
+					</div>
+					{% if include.title == 'bellow' %}
+						<h5 class="uk-text-uppercase uk-margin-top uk-margin-remove-bottom">{{ post.title }}</h5>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% include partials/section-close.html 
+  section_size=include.section_size 
+	section_background=include.section_background
+	section_image=include.section_image
+	section_video=include.section_video
+%}

@@ -1,0 +1,41 @@
+{% if include.email %}
+<form class="uk-form-{{ include.layout | default: 'stacked' }} uk-margin-medium-top" method="POST" action="https://formspree.io/{{ include.email }}" accept-charset="UTF-8">
+    {% if include.name == 'true' %}
+    <div class="uk-margin-bottom">
+        <label class="uk-form-label" for="name">{{ site.data[site.template].translation[site.lang].contact_name | default: "Name" }}</label>
+        <div class="uk-form-controls">
+            <input class="uk-input uk-border-rounded" id="name" name="name" type="text" required>
+        </div>
+    </div>
+    {% endif %}
+    <div class="uk-margin-bottom">
+        <label class="uk-form-label" for="_replyto">{{ site.data[site.template].translation[site.lang].contact_email | default: "Email" }}</label>
+        <div class="uk-form-controls">
+            <input class="uk-input uk-border-rounded" id="_replyto" name="_replyto" type="email" required>
+        </div>
+    </div>
+    {% if include.subject == 'true' %}
+    <div class="uk-margin-bottom">
+        <label class="uk-form-label" for="_subject">{{ site.data[site.template].translation[site.lang].contact_subject | default: "Subject" }}</label>
+        <div class="uk-form-controls">
+            <input class="uk-input uk-border-rounded" id="_subject" name="_subject" type="text">
+        </div>
+    </div>
+    {% endif %}
+    <div class="uk-margin-bottom">
+        <label class="uk-form-label" for="message">{{ site.data[site.template].translation[site.lang].contact_message | default: "Message" }}</label>
+        <div class="uk-form-controls">
+            <textarea class="uk-textarea uk-border-rounded" id="message" name="message" rows="5" minlength="10" required></textarea>
+        </div>
+    </div>
+    <div>
+        <div class="uk-form-controls">
+            {% if include.redirect %}
+            <input type="hidden" name="_next" value="{{ include.redirect | absolute_url }}">
+            {% endif %}
+            <input type="text" name="_gotcha" style="display:none">
+            <input class="uk-button uk-button-primary" type="submit" value="{{ site.data[site.template].translation[site.lang].contact_send | default: 'Send' }}">
+        </div>
+    </div>
+</form>
+{% endif %}
