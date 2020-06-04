@@ -4,7 +4,8 @@ $global-secondary-background:                   #000;
 $global-success-background:                     #32d296;
 $global-warning-background:                     #faa05a;
 $global-danger-background:                      #D95B72;
-$global-font-family:                            system-ui;
+// $global-font-family:                            system-ui;
+$global-font-family:                            Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 $global-link-color:                             lighten($global-primary-background, 20%);
 $global-link-hover-color:                       lighten($global-primary-background, 20%);
 $global-small-font-size:                        0.875rem;
@@ -14,9 +15,10 @@ $global-xlarge-font-size:                       2rem;
 $global-large-font-size:                        1.5rem;
 $global-medium-font-size:                       1.25rem;
 $xsmall-font-size:                              0.875rem;
-                                
+
 // Base variables
-$base-heading-font-family:                      'Montserrat', system-ui, san-serif;
+// $base-heading-font-family:                      'Montserrat', system-ui, san-serif;
+$base-heading-font-family:                      -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 $base-heading-font-weight:                      600;
 $base-heading-color:                            #000;
 $base-h2-line-height:                           1.4;
@@ -78,7 +80,7 @@ $card-default-title-color:                      $base-heading-color;
 $card-default-color:                            $base-body-color;
 
 // Heading variables
-$heading-large-font-size-l:                     5rem; 
+$heading-large-font-size-l:                     5rem;
 $heading-divider-border-width:                  1px;
 $heading-divider-border:                        #d0d5de;
 

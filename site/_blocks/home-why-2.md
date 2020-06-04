@@ -1,5 +1,5 @@
 ---
-title: Secure
+title: Handy and easy to use
 ---
 
-There are only static files on a web server, there’s nothing dynamic that can be exploited.
+Hex and ASCII preview of the output. Save to file or to clipboard in one click.

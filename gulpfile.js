@@ -10,6 +10,8 @@ let gulp                   = require('gulp'),
   imgCompress            = require('imagemin-jpeg-recompress'),
   cleanCSS               = require('gulp-clean-css');
 
+import run from 'gulp-run-command';
+
 gulp.task('sass', function (done) {
   return gulp.src('app/sass/**/*.sass')
     .pipe(sass({includePaths: require('node-normalize-scss').includePaths}))
@@ -66,9 +68,9 @@ gulp.task('clean', async function() {
 gulp.task('browser-sync', function() { // Создаем таск browser-sync
   browserSync({ // Выполняем browser Sync
     server: { // Определяем параметры сервера
-      baseDir: 'app', // Директория для сервера - app
+      baseDir: 'site/_site/', // Директория для сервера - app
     },
-    port: 8080,
+    port: 4000,
     notify: false // Отключаем уведомления
   });
 });
@@ -76,10 +78,15 @@ gulp.task('browser-sync', function() { // Создаем таск browser-sync
 gulp.task('watch', function() {
   gulp.watch('app/sass/**/*.sass', gulp.parallel('sass'));
 });
+// 
+// gulp.task('jekyll-build', function(){
+//   run('cd site && bundle exec jekyll serve')
+// });
+
 // gulp.task('default', gulp.parallel('sass', 'browser-sync', 'watch', 'minjs'));
-gulp.task('default', gulp.series(function(){
-  return gulp.src('modules/base64/dist/**/*').pipe(gulp.dest('app/dist/'))
-}, gulp.parallel('browser-sync', 'watch')));
+// gulp.task('default', gulp.series(function(){
+//   return gulp.src('modules/base64/dist/**/*').pipe(gulp.dest('site/_site/assets/js/dist/'))
+// }, gulp.parallel('browser-sync', 'watch', 'jekyll-build')));
 
 // gulp.task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'minjs'));
 

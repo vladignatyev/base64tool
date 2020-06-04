@@ -1,6 +1,7 @@
 ---
-title: Tired of never ending site maintenance
-subtitle: Put an end to constant theme and plugin updates. Build your website with Jekyll static generator and get on with what matters the most, your business.
+title: Ultimate Base64 Encode & Base64 Decode Tool
+subtitle: All-in-one encoding online tool to prepare files and assets for web.
 ---
 
-{% include button.html text="Purchase" url="#" style="default" size="xlarge" icon="cart" %}
+{% include button.html text="START" nohref="1"
+spinner="1" style="default" class="launcher" size="xlarge" %}

@@ -1,16 +1,14 @@
 ---
 width: full
 navbar:
-  sticky: true
+  sticky: false
   scroll_up: true
   animation: true
-  transparent: true
-  transparent_color: light
+  transparent: false
+  transparent_color: dark
 header:
   layout: 1-1 # Options: left, center, 1-1, 1-2, 1-3 or 2-3
-  background_image: Working-Space.jpg
-  background_video: Working-Space.mp4
-  background_overlay: "linear-gradient(to left top,rgba(218, 91, 197, 0.8) 0%,rgba(151, 27, 191, 0.8) 30%,rgba(2, 8, 212, 0.8) 80%)"
+  background_color: "#447ADE"
   color: light
   heading_size: medium
   height: full
@@ -19,23 +17,7 @@ header:
   content:
     block: header-home
 ---
-
-[comment]: # (This actually is the most platform independent comment)
-
 {% if site.template == 'base' %}
-
-  {% include cards.html
-    block="feature"
-    section_background="default"
-    section_size="large"
-    section_title="The first multipurpose Jekyll theme"
-    section_header_align="center"
-    section_content_align="center"
-    media="top"
-    grid="1-4"
-    gutter="large"
-    icon_color="#1B33BF"
-  %}
 
   {% include cards.html
     block="home-why"
@@ -47,16 +29,19 @@ header:
     gutter="large"
   %}
 
-  {% include cta.html
+
+  {% include cards.html
+    block="home-about"
     section_size="large"
-    section_image="header-9.jpeg"
+    section_image="about-section.jpg"
     section_overlay="rgba(0, 0, 0, 0.5)"
-    section_container="small"
+    section_container="large"
     section_content_align="center"
     section_content_color="light"
-    layout="1"
-    block="cta-4"
+    grid="1-3"
+    gutter="large"
   %}
+
 
 {% else %}
 

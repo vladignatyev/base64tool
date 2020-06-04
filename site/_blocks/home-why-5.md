@@ -1,5 +1,5 @@
 ---
-title: Simplicity
+title: Faultless
 ---
 
-Jekyll is a static site using Liquid language, it is easy to learn if you already know HTML and JS.
+Better than `atob`/`btoa` in JS and `base64` in CLI. Supports UTF-8 and UTF-16 input and output.

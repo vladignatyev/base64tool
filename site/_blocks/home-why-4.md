@@ -1,5 +1,5 @@
 ---
-title: Version control
+title: Large files
 ---
 
-The site source code lives in a version control system and you can go back to any version in history.
+Process up to few GBs without network operations.

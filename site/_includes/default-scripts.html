@@ -1,0 +1,50 @@
+
+
+
+<script type="text/javascript">
+  var launched = false;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    // var view = document.querySelector('[role=b64-app]');
+    // var vc = new b64app.AppController(view);
+    // vc.init();
+
+    var launcher = document.querySelector('.launcher');
+    var spinner = document.querySelector('.spinner');
+
+    var toHide = document.querySelector('.hide-on-launch');
+    var toShow = document.querySelector('.show-on-launch');
+
+    if (!launcher) return;
+
+    launcher.addEventListener('click', () => {
+      if (launched) return;
+      launched = true;
+
+      // launcher.classList.add('loading');
+      spinner.classList.remove('hidden');
+
+      const scriptPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        document.body.appendChild(script);
+        script.onload = resolve;
+        script.onerror = reject;
+        script.async = true;
+        script.src = '/assets/dist/js/bundle.js';
+      });
+
+      scriptPromise.then(() => {
+        spinner.classList.add('hidden');
+        toHide.classList.add('hidden');
+        toShow.classList.remove('hidden');
+
+        var view = document.querySelector('[role=b64-app]');
+        var vc = new b64app.AppController(view);
+        vc.init();
+      });
+
+      return true;
+    })
+  });
+
+</script>

@@ -1,5 +1,5 @@
 ---
-title: Customer support
+title: Support
 ---
 
-Should you have questions, we are here to help. Each purchase includes six months of support. 
+Lots of explainers and manuals about base64 family, radix conversions, RFC standards and modern application of base32, base52, base64 etc. encodings.

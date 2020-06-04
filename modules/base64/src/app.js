@@ -37,7 +37,7 @@ export const AppController = function (el){
     this.inputViewCtl.init();
     this.resultViewCtl.init();
     bus.addEventListener("error", (event) => {
-      alert("ERROR");
+      alert("Unknown error has occured. Try again.");
     });
     bus.addEventListener("encode", (event) => {
       let blob = event.detail;

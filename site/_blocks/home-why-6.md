@@ -1,5 +1,5 @@
 ---
-title: Low maintenance
+title: Unlimited
 ---
 
-There are no constant plugin or software updates required to keep your site up-to-date and secure.
+MIT license enables you to modify and republish this tool freely.

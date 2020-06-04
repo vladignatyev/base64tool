@@ -83,6 +83,7 @@
       {% if page.header.layout == '1-1' %}
         <div class="uk-flex uk-text-center uk-flex-middle uk-flex-center">
           <div class="uk-width-1-1">
+            <div class="hide-on-launch">
             {% if page.header.content.block %}
               {%- assign container = site.blocks | where:"slug", page.header.content.block | first -%}
               {% unless page.header.content.title == false %}
@@ -97,6 +98,55 @@
                 </div>
               {% endunless %}
             {% endif %}
+            </div>
+
+            <span class="hidden spinner lds-ring"><div></div><div></div><div></div><div></div></span>
+
+            <div role="b64-app" class="hidden show-on-launch">
+              <div class="b64-view" role="input-view">
+                <div role="progress-view">
+                  <div role="output-holder"></div>
+                  <button role="cancel-btn" style="opacity:0;">Cancel</button>
+                </div>
+                <div role="textinput-error-box"></div>
+                <textarea role="textinput" name="name" rows="8" cols="80"></textarea>
+
+
+                <div role="fileinput-error-box"></div>
+                <div class="drop-view">
+                  <p>or choose file</p>
+                  <input type="file" name="file" id="file" tabindex="5" role="file-drop" />
+                </div>
+
+                <div role="errors"></div>
+
+                <button role="encode-btn" type="button" name="button">Encode</button>
+                <button role="decode-btn" type="button" name="button">Decode</button>
+                <button role="restart-btn">Start over</button>
+              </div>
+
+              <div class="b64-view b64-hidden" role="result-view">
+                <div role="notification"></div>
+                <div role="binary-preview"></div>
+                <div role="text-preview"></div>
+                <div role="encoding-output"></div>
+                <button role="save-file-btn">Save as file</button>
+                <button role="save-clipboard-btn">Copy to clipboard</button>
+                <button role="restart-btn">Start over</button>
+              </div>
+
+              <div role="hex-viewer">
+
+              </div>
+
+              <div role="text-viewer">
+
+              </div>
+
+            </div>
+
+
+
           </div>
         </div>
       {% elsif page.header.layout == '2-3' or page.header.layout == '1-2' or page.header.layout == '1-3' %}

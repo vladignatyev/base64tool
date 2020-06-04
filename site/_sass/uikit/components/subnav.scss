@@ -97,6 +97,16 @@ $subnav-item-disabled-color:                     $global-muted-color !default;
     @if(mixin-exists(hook-subnav-item)) {@include hook-subnav-item();}
 }
 
+.uk-subnav > * > img.icon {
+    /* 1 */
+    display: inline-block;
+    /* 2 */
+    color: $subnav-item-color;
+
+    margin-top: -3px;
+    @if(mixin-exists(hook-subnav-item)) {@include hook-subnav-item();}
+}
+
 /* Hover + Focus */
 .uk-subnav > * > a:hover,
 .uk-subnav > * > a:focus {

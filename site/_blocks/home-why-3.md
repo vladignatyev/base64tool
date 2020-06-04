@@ -1,5 +1,5 @@
 ---
-title: Host for free
+title: No more uploads
 ---
 
-Jekyll site can be hosted completely free on GitHub or Gitlab pages.
+The encoding and decoding performs completely browser-side.

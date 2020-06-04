@@ -27,7 +27,7 @@ module.exports = {
             loader: 'worker-loader',
             options: {
               name: 'js/workers/[name].[hash].js',
-              publicPath: 'dist/'
+              publicPath: 'assets/dist/'
             }
           }
         ]

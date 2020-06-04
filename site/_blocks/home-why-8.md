@@ -1,5 +1,5 @@
 ---
-title: Documented
+title: Open Source
 ---
 
-Not familiar with Jekyll? We have documented the setup and features to get you started fast.
+Clean Vanilla JS implementation utilise WebWorkers’ super-powers!

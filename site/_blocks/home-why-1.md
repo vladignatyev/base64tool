@@ -1,5 +1,5 @@
 ---
-title: Blazing fast
+title: Two-way encoding/decoding
 ---
 
-Static sites are faster, nearly half of all visitors leave a site if not loaded in three seconds.
+Encodes and decodes files and text from the clipboard.

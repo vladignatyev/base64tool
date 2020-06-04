@@ -5,9 +5,9 @@
 # If you change this file, please restart the server process.
 
 # Site settings
-title:                  Eon
-description:            Multipurpose Jekyll theme.
-url:                    "https://eon.unbound.studio" # Site base hostname & protocol, e.g. http://example.com
+title:                  Base64 Tool. The only
+description:            Ultimate Base64 encode/decode tool for web people. All batteries included. Open Source. Vanilla JS.
+url:                    "https://base64tool.com" # Site base hostname & protocol, e.g. http://example.com
 baseurl:                # Site subpath, e.g. /blog
 lang:                   en
 logo:                   logo-dark.svg
@@ -22,22 +22,22 @@ paginate_path:          "/blog/:num/" # Blog path
 
 # Default author settings
 author:
-  name:                 Pete Seth
-  avatar:               avatar-tom.png
+  name:                 Vladimir Ignatev
+  avatar:               avatar-vladimir.png
   title:                Support
-  bio:                  I am the CEO of this company, loved by everyone, just plain awesome so you want to follow me all the time.
+  bio:                  I create and maintain handy online tools for people of web.
   url:
-  email:                info@blacompany.com
+  email:                crxextractor@gmail.com
   website:
-  facebook:             https://www.facebook.com/
+  facebook:             https://www.facebook.com/ignatev
   flickr:
   dribbble:
-  github:
+  github:               https://github.com/vladignatyev/
   googleplus:
-  instagram:            https://www.instagram.com/
+  instagram:
   linkedin:
   pinterest:
-  twitter:
+  twitter:              https://twitter.com/v_ignatyev
   vimeo:
   youtube:
 
@@ -46,27 +46,7 @@ authors:
   john:
     name:               John Brown
     title:              Support
-    avatar:             avatar-john.png
-  evan:
-    name:               Evan Wells
-    title:              Support
-    avatar:             avatar-evan.png
-  sara:
-    name:               Sara Galen
-    title:              Lead Developer
-    avatar:             avatar-sara.png
-  alex:
-    title:              Design Engineer
-    name:               Alex Koch
-    avatar:             avatar-alex.png
-  daniel:
-    title:              Developer
-    name:               Daniel Shultz
-    avatar:             avatar-daniel.png
-  tom:
-    title:              Developer
-    name:               Tom Farrell
-    avatar:             avatar-tom.png
+    avatar:             avatar-vladimir.png
 
 navbar:
   layout:               default # default, center
@@ -78,17 +58,17 @@ navbar:
 footer:                 # Default footer image settings
   style:                secondary # default, muted, primary, secondary
   layout:               center # center or columns
-  copyright:            Made by <a href="https://unbound.studio/">Unbound Studio</a> in Mexico City.
+  copyright:
 
 mailchimp:
   form_action:          000000
   hidden_name:          000000
 
-google_analytics:       # Google analytics code, get your code here https://www.google.com/analytics/
+google_analytics:       "UA-82390179-7"
 google_maps_api_key:    # Google maps API key, get your key here: https://developers.google.com/maps/documentation/javascript/get-api-key
 
 disqus:
-  shortname:            # Disqus comments shortname, requires Disqus account https://disqus.com/
+  shortname:            "base64-tool"
 
 instagram_accesstoken:
 
@@ -107,17 +87,17 @@ social_share:
 
 # Social buttons
 social_networks:
-  email:                info@blacompany.com
+  email:                ya.na.pochte@gmail.com
   website:
-  facebook:             https://www.facebook.com/
+  facebook:             https://www.facebook.com/ignatev
   flickr:
   dribbble:
-  github:
+  github:               https://github.com/vladignatyev/
   googleplus:
-  instagram:            https://www.instagram.com/
+  instagram:
   linkedin:
   pinterest:
-  twitter:
+  twitter:              https://twitter.com/v_ignatyev
   vimeo:
   youtube:
 
@@ -187,7 +167,7 @@ defaults:
       header:
         layout:             center
         background_overlay: "rgba(0, 0, 0, 0.5)"
-        color:              light
+        color:              dark
         header_size:        large
         heading_size:       medium
         parallax:           true

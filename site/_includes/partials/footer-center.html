@@ -15,7 +15,7 @@
                         {% assign current = null %}
                     {% endif %}
                     {% if link.title %}
-                        <li{{ current }}><a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" rel="noopener" {% endif %}>{{ link.title }}</a></li>
+                        <li{{ current }}>{% if link.icon %}<img src="{{ link.icon }}" class="icon" />&nbsp;{% endif %}<a href="{{ domain }}{{ link.url }}" {% if link.url contains 'http' %}target="_blank" rel="noopener" {% endif %}>{{ link.title }}</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>

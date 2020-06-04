@@ -4,10 +4,13 @@
   "description": "",
   "private": true,
   "scripts": {
-    "start": "node_modules/gulp/bin/gulp.js",
-    "build": "cd modules/base64 && webpack --mode=development",
+
+    "start": "npm run build && cd site/ && bundle exec jekyll serve",
+    "build": "cd modules/base64 && webpack --mode=development && cd ../../site && bundle exec jekyll clean && bundle exec jekyll build && mkdir -p assets/dist/ && cp -R -f -v ../modules/base64/dist/* assets/dist/",
+    "release": "cd modules/base64 && webpack --mode=production && cd ../../site && bundle exec jekyll clean && JEKYLL_ENV=production bundle exec jekyll build && mkdir -p assets/dist/ && cp -R -f -v ../modules/base64/dist/* assets/dist/",
+
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf dist/"
+    "clean": "cd site && bundle exec jekyll clean"
   },
   "repository": {
     "type": "git",

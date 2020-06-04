@@ -1,5 +1,5 @@
 ---
-title: Actively developed
+title: Fits your workflow
 ---
 
-New ready to use demos are being added continuously and new features developed.
+Common web tasks made easy. Whether you need SVG to Base64 encoding, image to Base64 converting and embedding into SASS/CSS/HTML, this tool finds you.
