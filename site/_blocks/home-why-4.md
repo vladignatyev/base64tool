@@ -2,4 +2,4 @@
 title: Large files
 ---
 
-Process up to few GBs without network operations.
+Process up to few gigabytes with no slow network operations.

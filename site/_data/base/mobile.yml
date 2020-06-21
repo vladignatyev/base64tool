@@ -2,8 +2,8 @@
 - title: Home
   url: /
 
-# - title: Faq
-#   url: /faq/
+- title: Tutorials
+  url: /tutorials/
 
 - title: More
   url: /more/
@@ -13,6 +13,8 @@
 
 - title: Contact
   url: /contact/
+
+
 
 # - title: Blog
 #   url: /blog/

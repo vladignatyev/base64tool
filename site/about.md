@@ -4,11 +4,13 @@ subtitle:
 width: small
 ---
 
-This tool was created to provide an ultimate GUI tool for encoding and decoding binary data, files and assets to and from `base64` encoding.
+This tool is an ultimate GUI tool for encoding and decoding binary data, files and image assets to and from `base64` encoding.
 
 Base64 Encoding is a family of encodings, supposed to safely transmit binary data across machines. Base64 turns any binary stream (bytes from `0x00` to `0xFF`) into ASCII stream (characters from `0` to `9`, from `A` to `Z`, `a` to `z`, `=` and `/`). Base64 encoded data can be read through any text terminal, by people or machines, transmitted over HTTP etc.
 
-If you try to find the easiest way of converting `base16/32/64` representations you’ll get a tons of information, that makes difficulties in understanding the problem that `base*` family encodings deal with. Probably, you’ll find some online tools, similar to this one, tutorials, Q&A at the Stackoverflow or other community websites, code libraries and packages. Take the NPM as an example:
+If you try to find the easiest way of converting `base16/32/64` representations you’ll get a tons of irrelevant information, that makes difficulties in understanding the problem that `base*` family encodings solve. Probably, you find some online tools, similar to this one, tutorials, Q&A at the Stackoverflow or other community websites, code libraries and software packages.
+
+Take the NPM as an example:
 {% include image.html
   src="npm-base64-encoding-and-decoding-packages.png"
   caption="NPM: Base64 Encoding And Decoding Packages as of year 2020"
@@ -20,11 +22,11 @@ If you try to find the easiest way of converting `base16/32/64` representations 
  %}
 NPM has a bunch of _1499 packages_ (😲): tools and libraries implementing the variety of base64 encoding/decoding algorithms and wrappers for every need.
 
-Such enormous diversity of tools along with more broader set of applications for radix conversion and base*-family, makes a challenge to every software engineer who simply needs ”binary to ASCII” and back in his project.
+Such enormous diversity of tools along with more broader set of applications for radix conversion and base*-family, poses a big challenge to every software engineer who simply needs ”binary to ASCII” and back in his project.
 
-Additionally, when implementing your own application or the website you may find challenging the debugging and investigating problems those may appear due to *incorrect implementation or unsupported boundary cases*.
+Additionally, when implementing your own application or the website you may find challenging the debugging and fixing problems those may appear due to *incorrect implementation or unsupported edge cases*.
 
-## Short example of the boundary case
+## Short example of the edge case
 For example, if you make a web application, your code may rely on `btoa`/`atob` function in Javascript.
 
 This code snippet will convert a binary data (the string “asdß”) into Base64-encoded string:
@@ -32,16 +34,9 @@ This code snippet will convert a binary data (the string “asdß”) into Base6
 > btoa('asdß')
 "YXNk3w=="
 ```
-For some reason, the following, the same snippet, but different input, containing UTF-8 character (notice the ˚ symbol), will 🐛 fail in Chrome browser:
-```
-> btoa('asd˚')
-Uncaught DOMException:
-Failed to execute 'btoa' on 'Window':
-The string to be encoded contains characters
-outside of the Latin1 range.
-```
+For some reason, the same snippet provided with different input, containing UTF-8 character, will 🐛 fail in Chrome browser with error. Learn problem and solution in the corresponding Answers page related to [Uncaught DOM Exception: Failed execute 'btoa'](/uncaught-domexception-btoa-on-window/)
 
-If you run the snippet below in your Terminal on Mac, you probably get the right result:
+At the same time, if you run the snippet below in your Terminal on Mac, you get the proper result:
 ```bash
 $ echo 'asd˚' | base64
 YXNky5oK
@@ -116,3 +111,6 @@ In most cases automating of the encoding and decoding is not required or leads t
 Existing online tools those easily searched in Google are lacking of modern user experience and, basically, they’re lacking of awesomeness!
 
 The solution is straightforward: the Ultimate Base64 Tool, suitable for big files, all-way encoding with simple yet powerful GUI, that doesn't transmit anything over network for much better performance. This is how the website was born.
+
+# Learn more about Base64
+[Mozilla Developer Glossary](https://developer.mozilla.org/en-US/docs/Glossary/Base64) have a note about Base64 and its implementation in modern browsers.

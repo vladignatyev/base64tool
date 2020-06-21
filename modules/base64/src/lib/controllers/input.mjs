@@ -12,9 +12,7 @@ export const InputViewController = function (bus, el) {
 
   this.encodeBtn = $(el)('[role=encode-btn]');
   this.decodeBtn = $(el)('[role=decode-btn]');
-  this.restartBtn = $(el)('[role=restart-btn]');
 
-  // let bus = bus;
   let controller = this;
 
   let errors = [];
@@ -42,11 +40,13 @@ export const InputViewController = function (bus, el) {
   this.clear.bind(this);
 
   this.cleanErrors = () => {
+    this.errorsView.style.opacity = 0.0;
     this.errorsView.innerHTML = '';
   }
   this.cleanErrors.bind(this);
 
   this.renderErrors = (errors) => {
+    this.errorsView.style.opacity = 1.0;
     this.errorsView.innerHTML = errors.map((e) => `<p>${errorStrings[e]}</p>`).join('')
   }
   this.renderErrors.bind(this);
@@ -87,12 +87,20 @@ export const InputViewController = function (bus, el) {
   this.readInputForDecode.bind(this);
 
   this.init = () => {
-    this.restartBtn.addEventListener('click', () => {
-      let e = new Event("restart");
-      controller.cleanErrors();
-      bus.dispatchEvent(e);
+    // this.decodeBtn.disabled = true;
+    // this.encodeBtn.disabled = true;
+
+
+    this.fileInput.addEventListener('change', () => {
+      this.decodeBtn.disabled = true;
+      this.encodeBtn.disabled = false;
     });
-    this.fileInput.addEventListener('change', () => this.decodeBtn.disabled = true);
+
+    this.textInput.addEventListener('change', () => {
+      this.decodeBtn.disabled = false;
+      this.encodeBtn.disabled = false;
+    });
+
     this.encodeBtn.addEventListener('click', () => {
       // let validation = controller.validateEncode();
       // if (validation !== true) {

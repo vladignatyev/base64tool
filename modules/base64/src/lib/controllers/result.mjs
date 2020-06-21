@@ -23,11 +23,12 @@ export const ResultViewController = function (bus, el) {
   this.restartBtn = $(el)('[role=restart-btn]');
 
 
-
   this.setOutputIsTrimmed = (trimmed) => {
     if (trimmed) {
+      this.notificationView.style.opacity = 1.0;
       this.notificationView.innerHTML = `<p>${errorStrings['outputTrimmed']}</p>`;
     } else {
+      this.notificationView.style.opacity = 0.0;
       this.notificationView.innerHTML = ``;
     }
   }

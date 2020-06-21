@@ -8,7 +8,7 @@
     "start": "npm run build && cd site/ && bundle exec jekyll serve",
     "build": "cd modules/base64 && webpack --mode=development && cd ../../site && bundle exec jekyll clean && bundle exec jekyll build && mkdir -p assets/dist/ && cp -R -f -v ../modules/base64/dist/* assets/dist/",
     "release": "cd modules/base64 && webpack --mode=production && cd ../../site && bundle exec jekyll clean && JEKYLL_ENV=production bundle exec jekyll build && mkdir -p assets/dist/ && cp -R -f -v ../modules/base64/dist/* assets/dist/",
-
+    "upload": "aws s3 sync --region us-west-1 site/_site/ s3://base64tool.com && aws cloudfront create-invalidation --distribution-id E2Q6C8FJZ1258Z --paths \"/*\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "cd site && bundle exec jekyll clean"
   },

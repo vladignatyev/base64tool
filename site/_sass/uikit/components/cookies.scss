@@ -1,0 +1,20 @@
+$cookie-padding: 1em;
+$cookie-internal-padding: 1em;
+
+.cookie-consent {
+  font-size: 80%;
+  padding: $cookie-internal-padding;
+  box-shadow: 1px 1px 10px rgba(0,0,0,0.25);
+  border-radius: 10px;
+  z-index: 10;
+  background: #fff;
+  position: fixed;
+}
+
+.cookie-bottom {
+  bottom: 1em;
+}
+
+.cookie-left {
+  left: $cookie-padding;
+}

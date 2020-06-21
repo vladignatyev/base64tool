@@ -22,6 +22,6 @@ Suggest an improvement, a&nbsp;feature or propose an idea using this form!
 You are very-very welcome!
 
 ## Feedback
-{% include formspree.html email="my_name@gmail.com" redirect="/thanks/" endpoint="https://formspree.io/mknqokbn" name="false" subject="false" %}
+{% include formspree.html email="my_name@gmail.com" redirect="/" endpoint="https://formspree.io/mknqokbn" name="false" subject="false" %}
 
-Or write few lines via [Twitter](https://twitter.com/v_ignatyev) or [E-mail](ya.na.pochte@gmail.com)
+Or write few lines via [Twitter](https://twitter.com/v_ignatyev) or [E-mail](mailto:ya.na.pochte@gmail.com)

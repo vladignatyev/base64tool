@@ -1,6 +1,6 @@
 ---
-title: Ultimate Base64 Encode & Base64 Decode Tool
-subtitle: All-in-one encoding online tool to prepare files and assets for web.
+title: Base64 Tool
+subtitle: Ultimate one-off tool to encode and decode Base64. Prepare assets for web easily!
 ---
 
 {% include button.html text="START" nohref="1"

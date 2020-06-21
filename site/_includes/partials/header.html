@@ -109,40 +109,47 @@
                   <button role="cancel-btn" style="opacity:0;">Cancel</button>
                 </div>
                 <div role="textinput-error-box"></div>
-                <textarea role="textinput" name="name" rows="8" cols="80"></textarea>
 
+                <h4>Paste into the area below...</h4>
+                <textarea role="textinput" name="name" rows="8" cols="80">Paste here!</textarea>
 
                 <div role="fileinput-error-box"></div>
                 <div class="drop-view">
-                  <p>or choose file</p>
+                  <p>...or choose file</p>
                   <input type="file" name="file" id="file" tabindex="5" role="file-drop" />
                 </div>
 
-                <div role="errors"></div>
+                <div role="errors" style="opacity:0.0;"></div>
 
-                <button role="encode-btn" type="button" name="button">Encode</button>
-                <button role="decode-btn" type="button" name="button">Decode</button>
-                <button role="restart-btn">Start over</button>
+                <div class="buttons">
+                  <button role="encode-btn" type="button" name="button">Encode</button>
+                  <button role="decode-btn" type="button" name="button">Decode</button>
+                </div>
               </div>
 
               <div class="b64-view b64-hidden" role="result-view">
                 <div role="notification"></div>
-                <div role="binary-preview"></div>
-                <div role="text-preview"></div>
-                <div role="encoding-output"></div>
-                <button role="save-file-btn">Save as file</button>
-                <button role="save-clipboard-btn">Copy to clipboard</button>
-                <button role="restart-btn">Start over</button>
+                <div class="outputs">
+                  <div>
+                    <h4>Input: Hex preview</h4>
+                    <div role="binary-preview"></div>
+                  </div>
+                  <div>
+                    <h4>Input: ASCII preview</h4>
+                    <div role="text-preview"></div>
+                  </div>
+                  <div>
+                    <h4>Output</h4>
+                    <div role="encoding-output"></div>
+                  </div>
+
+                </div>
+                <div class="buttons">
+                  <button role="save-file-btn">💾&nbsp;Save file</button>
+                  <button role="save-clipboard-btn">📋&nbsp;Copy to clipboard</button>
+                  <button role="restart-btn">Start over</button>
+                </div>
               </div>
-
-              <div role="hex-viewer">
-
-              </div>
-
-              <div role="text-viewer">
-
-              </div>
-
             </div>
 
 

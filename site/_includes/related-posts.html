@@ -1,5 +1,5 @@
 <div class="uk-container uk-container-small">
-    <h4 class="uk-margin-remove-bottom uk-margin-large-top">{{ site.data[site.template].translation[site.lang].related_posts | default: "Related Posts" }}</h4>
+    <h4 class="uk-margin-remove-bottom uk-margin-large-top">{{ site.data[site.template].translation[site.lang].related_posts | default: "Further reading" }}</h4>
     {% assign maxRelated = 4 %}
     {% assign minCommonTags =  1 %}
     {% assign maxRelatedCounter = 0 %}
@@ -24,7 +24,7 @@
                     {% break %}
                 {% endif %}
             {% endif %}
-    
+
         {% endfor %}
-    </ul>                    
+    </ul>
 </div>

@@ -2,4 +2,4 @@
 title: Open Source
 ---
 
-Clean Vanilla JS implementation utilise WebWorkers’ super-powers!
+Clean Vanilla JS implementation uses WebWorkers super-power!

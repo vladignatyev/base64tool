@@ -7,7 +7,6 @@ self.addEventListener('message', (e) => {
   handleDataConsumed = (event) => {
     let s = new Uint8Array(event.target.result);
 
-
     // atob can work with strings with whitespaces, even inside the encoded part,
     // but only \t, \n, \f, \r and ' ', which can be stripped.
     let string = String(fr.result).replace(/[\t\n\f\r ]+/g, "");

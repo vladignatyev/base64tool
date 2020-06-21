@@ -1,0 +1,18 @@
+<div id="cookies-banner" class="cookie-consent cookie-bottom cookie-left">
+  By using this website, you agree to <a href="/cookies/" target="_blank">Cookie Policy</a>.
+  <a class="uk-button uk-button-default uk-button-small" href="javascript:acceptCookieConsent();">Hide</a>
+</div>
+<script type="text/javascript">
+  function acceptCookieConsent() {
+    document.cookie = 'acceptCookie=1; ' + document.cookie;
+    updateCookieConsent();
+  }
+
+  function updateCookieConsent() {
+    if (document.cookie.indexOf('acceptCookie=1') >= 0) {
+      document.querySelector('.cookie-consent').remove();
+    }
+  }
+
+  updateCookieConsent();
+</script>

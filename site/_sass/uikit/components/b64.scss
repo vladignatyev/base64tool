@@ -1,0 +1,107 @@
+
+.hexviewer {
+  font-size: 8px;
+  width: auto;
+}
+.b64-hidden {
+  display: none;
+}
+
+.b64-view  {
+  transition: opacity 0.3s;
+}
+
+.b64-view [role=text-preview], .b64-view [role=binary-preview]  {
+  padding: 1em;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  @extend .uk-light;
+}
+
+input[type=file] {
+  @extend .uk-button, :hover, :focus, :active;
+  @extend .uk-button-default;
+  @extend .uk-light;
+}
+
+[role=encoding-output] {
+  overflow-wrap: anywhere;
+  text-align: left;
+}
+
+[role=errors], [role=notification] {
+  margin-bottom: 1em;
+  margin-top: 1em;
+
+  background: rgba(0,0,0, 0.7);
+  border-radius: 10px;
+  padding: 0.5em;
+  text-align: left;
+  height: 1.5em;
+
+  transition: opacity 0.6s;
+
+  ::before {
+    content: '⚡ '
+  }
+}
+
+.outputs {
+  display: flex;
+
+}
+
+.buttons {
+  margin-top: 1em;
+
+}
+.outputs>div {
+  margin: 0 1em;
+}
+
+
+.b64-view [role=binary-preview] table.hexviewer {
+  margin-bottom: 0;
+}
+
+.b64-view [role=text-preview] pre {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  font-size: 8px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: $global-inverse-color;
+}
+
+.hexviewer tbody tr, .hexviewer tbody tr td  {
+  border: 0 !important;
+}
+
+.hexviewer th, .hexviewer td {
+  width: 16px;
+  padding: 0;
+  text-align: left;
+}
+
+.hexviewer td.trimmed {
+  text-align: center;
+  opacity: 0.5;
+}
+
+.hexviewer td:first-child {
+  padding-right: 1em;
+}
+
+.b64-view button {
+  @extend .uk-button, :hover, :focus, :active;
+  @extend .uk-button-default;
+
+  transition: opacity 0.3s;
+}
+
+.b64-view button[disabled] {
+  opacity: 0.0;
+}

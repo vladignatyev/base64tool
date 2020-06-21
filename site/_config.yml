@@ -12,13 +12,13 @@ baseurl:                # Site subpath, e.g. /blog
 lang:                   en
 logo:                   logo-dark.svg
 logo_light:             logo-light.svg
-permalink:              /:title/ # Permalink URLs structure, for permalink style options see: https://jekyllrb.com/docs/permalinks/
+permalink:              /:categories/:title/ # Permalink URLs structure, for permalink style options see: https://jekyllrb.com/docs/permalinks/
 date_format:            "%b %-d, %Y" # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
 uploads:                /uploads/ # Path to post content assets directory i.e post images, pdfs etc
 template:               base
 
 paginate:               6 # Number of posts displayed on blog page
-paginate_path:          "/blog/:num/" # Blog path
+paginate_path:          "/tutorials/:num/" # Blog path
 
 # Default author settings
 author:
@@ -32,7 +32,7 @@ author:
   facebook:             https://www.facebook.com/ignatev
   flickr:
   dribbble:
-  github:               https://github.com/vladignatyev/base64tool/
+  github:               vladignatyev/base64tool
   googleplus:
   instagram:
   linkedin:
@@ -43,10 +43,25 @@ author:
 
 # Author settings, displayed on post and doc pages if front matter references author name e.g. author: peter
 authors:
-  john:
-    name:               John Brown
-    title:              Support
-    avatar:             avatar-vladimir.png
+  vladimir:
+    name:                 Vladimir Ignatev
+    avatar:               avatar-vladimir.png
+    title:                Support
+    bio:                  I create and maintain handy online tools for people of web.
+    url:
+    email:                crxextractor@gmail.com
+    website:
+    facebook:             https://www.facebook.com/ignatev
+    flickr:
+    dribbble:
+    github:               vladignatyev/base64tool
+    googleplus:
+    instagram:
+    linkedin:
+    pinterest:
+    twitter:              https://twitter.com/v_ignatyev
+    vimeo:
+    youtube:
 
 navbar:
   layout:               default # default, center
@@ -92,7 +107,7 @@ social_networks:
   facebook:             https://www.facebook.com/ignatev
   flickr:
   dribbble:
-  github:               https://github.com/vladignatyev/
+  github:               https://github.com/vladignatyev/base64tool
   googleplus:
   instagram:
   linkedin:
@@ -134,6 +149,7 @@ exclude:
 
 sass:
   style:                compressed
+  sass_dir: _sass
 
 # collections:
 collections:
@@ -144,7 +160,7 @@ collections:
   faqs:
     output:             false
   portfolio:
-    output:             true
+    output:             false
 
 # Defaults
 defaults:
@@ -154,7 +170,7 @@ defaults:
       type:                 posts
     values:
       layout:               post
-      section:              large
+      section:              small
       sidebar:
         right:              blog
       comments:             # true

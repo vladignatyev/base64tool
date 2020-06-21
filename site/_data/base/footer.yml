@@ -9,8 +9,14 @@ center:
   # - title: Explainer
   #   url: /explainer/
 
+  - title: Tutorials
+    url: /tutorials/
+
   - title: More tools
     url: /more/
+
+  - title: GitHub
+    url: https://github.com/vladignatyev/base64tool/
 
   - title: Contact
     url: /contact/
