@@ -50,4 +50,4 @@ func main() {
 
 ```
 
-> Later this page will contain more examples of Base64 encoding and decoding in other modern programming languages: C, C++, C#, Rust, Ruby, Elm, Erlang, Kotlin, Java etc.
+> Later this page will contain more examples of Base64 encoding and decoding in other modern programming languages: C, C++, C#, Rust, Ruby, Elixir, Erlang, Kotlin, Java etc.

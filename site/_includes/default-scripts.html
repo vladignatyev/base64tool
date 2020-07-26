@@ -33,6 +33,8 @@
         var view = document.querySelector('[role=b64-app]');
         var vc = new b64app.AppController(view);
         vc.init();
+
+        gtag_report_conversion();
       });
 
       return true;

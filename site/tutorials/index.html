@@ -61,6 +61,17 @@ header:
     </div>
   {% endif %}
   {% for post in paginator.posts %}
+    {% assign third = forloop.index | modulo:3 %}
+    {% if third == 0 %}
+    <div>
+      <div class="uk-card uk-card-default uk-card-blog">
+        <div class="uk-card-body">
+          {% include adfeed.html %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
     <div>
       <div class="uk-card uk-card-default uk-card-blog">
         {% if post.image %}
