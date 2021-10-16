@@ -4,6 +4,9 @@ subtitle: "Encode Base64 in Python, Golang, PHP and others."
 tags: ["tutorial"]
 related: false
 category: "tutorial"
+breadcrumbs:
+  - title: Tutorial
+  - title: Base64 in every programming language
 ---
 
 ## Python Base64 Encode and Python Base64 Decode: Base64 in Python programming language
