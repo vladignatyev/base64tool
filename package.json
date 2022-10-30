@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/vladignatyev/har-extractor#readme",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
+    "browser-sync": "^2.27.10",
     "css-loader": "^3.4.2",
     "del": "^4.1.1",
     "fibers": "^4.0.2",
